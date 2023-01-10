@@ -13,4 +13,4 @@ for i in range(1000):
     t=1/60
     time.sleep(t)
 
-p.disconnect(p.GUI)
+p.disconnect()
