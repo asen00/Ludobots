@@ -19,8 +19,19 @@ backLegSensorValues = np.zeros(num)
 frontLegSensorValues = np.zeros(num)
 
 x = np.linspace(0, 2*np.pi, num)
-targetAngles = (np.pi/4)*np.sin(x)
-#np.save("sinplotTest.npy", targetAngles)
+
+backAmp = np.pi/24
+backFreq = 6
+backPhase = 0
+backConst = np.pi/3
+
+frontAmp = np.pi/6
+frontFreq = 6
+frontPhase = 0
+frontConst = 0
+
+backAngles = backAmp * np.sin(backFreq * x + backPhase) + backConst
+frontAngles = frontAmp * np.sin(frontFreq * x + frontPhase) + frontConst
 
 for i in range(num):
     p.stepSimulation()
@@ -32,16 +43,16 @@ for i in range(num):
     pyrosim.Set_Motor_For_Joint(bodyIndex = robotId, 
                                 jointName = 'Torso_BackLeg', 
                                 controlMode = p.POSITION_CONTROL,
-                                targetPosition = targetAngles[i],
+                                targetPosition = backAngles[i],
                                 maxForce = 30)
 
     pyrosim.Set_Motor_For_Joint(bodyIndex = robotId, 
                                 jointName = 'Torso_FrontLeg', 
                                 controlMode = p.POSITION_CONTROL,
-                                targetPosition = targetAngles[i],
+                                targetPosition = frontAngles[i],
                                 maxForce = 30)
     
-    t=1/60
+    t=1/240
     time.sleep(t)
 
 p.disconnect()
