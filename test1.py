@@ -12,7 +12,7 @@ planeId = p.loadURDF("plane.urdf")
 p.loadSDF("world.sdf")
 pyrosim.Prepare_To_Simulate(robotId)
 
-num=1000
+num=100
 
 backLegSensorValues = np.zeros(num)
 
@@ -26,3 +26,4 @@ for i in range(num):
 p.disconnect()
 
 print(backLegSensorValues)
+np.save("sensorVals.npy", backLegSensorValues)
