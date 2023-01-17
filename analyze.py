@@ -4,7 +4,6 @@ import matplotlib.pyplot as plt
 targetAngles = np.load("data/sinplotTest.npy")
 plt.plot(np.linspace(0, 2*np.pi, 10000), targetAngles)
 plt.show()
-exit()
 
 backLegSensorValues = np.load("data/backsensorVals.npy")
 frontLegSensorValues = np.load("data/frontsensorVals.npy")

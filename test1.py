@@ -13,15 +13,14 @@ planeId = p.loadURDF("plane.urdf")
 p.loadSDF("world.sdf")
 pyrosim.Prepare_To_Simulate(robotId)
 
-num=10000
+num=1000
 
 backLegSensorValues = np.zeros(num)
 frontLegSensorValues = np.zeros(num)
 
 x = np.linspace(0, 2*np.pi, num)
-targetAngles = np.sin(x)
-np.save("sinplotTest.npy", targetAngles)
-exit()
+targetAngles = (np.pi/4)*np.sin(x)
+#np.save("sinplotTest.npy", targetAngles)
 
 for i in range(num):
     p.stepSimulation()
@@ -33,13 +32,13 @@ for i in range(num):
     pyrosim.Set_Motor_For_Joint(bodyIndex = robotId, 
                                 jointName = 'Torso_BackLeg', 
                                 controlMode = p.POSITION_CONTROL,
-                                targetPosition = rd.random()*(-np.pi/4.0),
+                                targetPosition = targetAngles[i],
                                 maxForce = 30)
 
     pyrosim.Set_Motor_For_Joint(bodyIndex = robotId, 
                                 jointName = 'Torso_FrontLeg', 
                                 controlMode = p.POSITION_CONTROL,
-                                targetPosition = rd.random()*(np.pi/4.0),
+                                targetPosition = targetAngles[i],
                                 maxForce = 30)
     
     t=1/60
