@@ -5,16 +5,9 @@ import pyrosim.pyrosim as pyrosim
 import numpy as np
 import random as rd
 import constants as c
+from simulation import SIMULATION
 
-pass
-
-'''physicsClient = p.connect(p.GUI)
-p.setAdditionalSearchPath(pybullet_data.getDataPath())
-p.setGravity(0,0,-9.8)
-robotId = p.loadURDF("body.urdf")
-planeId = p.loadURDF("plane.urdf")
-p.loadSDF("world.sdf")
-pyrosim.Prepare_To_Simulate(robotId)'''
+simulation = SIMULATION()
 
 '''backLegSensorValues = np.zeros(c.num)
 frontLegSensorValues = np.zeros(c.num)'''

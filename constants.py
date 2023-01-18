@@ -1,5 +1,8 @@
 import numpy as np
 
+## Number of iterations in simulation
+num=1000
+
 ## Sinusoidal control of leg motors (Task G)
 
 # Back Leg
