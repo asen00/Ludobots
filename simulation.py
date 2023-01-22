@@ -19,6 +19,7 @@ class SIMULATION:
         for timeStep in range(c.num):
             p.stepSimulation()
             self.robot.Sense(timeStep)
+            self.robot.Think()
             self.robot.Act(self.robot.robotId, timeStep)
 
             t=1/60

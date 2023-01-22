@@ -1,5 +1,7 @@
 import math
 
+import numpy as np
+
 import pybullet
 
 import pyrosim.pyrosim as pyrosim
@@ -65,6 +67,12 @@ class NEURON:
     def Set_Value(self,value):
 
         self.value = value
+
+    def Update_Sensor_Neuron(self):
+        self.Set_Value(pyrosim.Get_Touch_Sensor_Value_For_Link(self.linkName))
+    
+    def Update_Hidden_Or_Motor_Neuron(self):
+        self.Set_Value(0.0)
 
 # -------------------------- Private methods -------------------------
 
