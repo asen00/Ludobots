@@ -1,7 +1,7 @@
 import numpy as np
 
 ## Number of iterations in simulation
-num=10000
+num=100
 
 ## Sinusoidal control of leg motors
 amplitude = np.pi/4
