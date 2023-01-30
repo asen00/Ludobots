@@ -25,6 +25,9 @@ class SIMULATION:
             t=1/60
             time.sleep(t)
     
+    def Get_Fitness(self):
+        self.robot.Get_Fitness()
+    
     def __del__(self):
         # Uncomment if you want to save sensor/motor values
         #self.robot.sensors.Save_Values()
