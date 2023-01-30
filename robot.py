@@ -32,7 +32,7 @@ class ROBOT:
     
     def Think(self):
         self.nn.Update()
-        self.nn.Print()
+        #self.nn.Print()
     
     def Act(self, robotId, timeStep):
         for neuron in self.nn.Get_Neuron_Names():
@@ -42,6 +42,6 @@ class ROBOT:
                 self.motors[jointName].Set_Value(robotId, desiredAngle)
     
     def Get_Fitness(self):
-        self.stateOfLinkZero = p.getLinkState(self.robot,0)
-        print(self.stateOfLinkZero)
+        stateOfLinkZero = p.getLinkState(self.robot,0)
+        print(stateOfLinkZero)
         exit()
