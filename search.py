@@ -5,6 +5,7 @@ from hillclimber import HILL_CLIMBER
 hc = HILL_CLIMBER()
 
 hc.Evolve()
+hc.Show_Best()
 
 '''for i in range(5):
     os.system("/Users/AntaraSen_1/opt/anaconda3/bin/python generate.py")

@@ -1,14 +1,24 @@
 import pyrosim.pyrosim as pyrosim
 import numpy as np
+import random as rd
 import os
 
 class SOLUTION:
     def __init__(self):        
         self.weights = (2*np.random.rand(3,2))-1
-    
-    def Evaluate(self):
+
+    def Evaluate(self, directOrGUI):
         self.Generate_Brain()
-        os.system("/Users/AntaraSen_1/opt/anaconda3/bin/python test1.py")
+        os.system("/Users/AntaraSen_1/opt/anaconda3/bin/python test1.py " + directOrGUI)
+        
+        fitnessFile = open("fitness.txt", "r")
+        self.fitness = float(fitnessFile.read())
+        fitnessFile.close()
+
+    def Mutate(self):
+        randomRow = rd.randint(0,2)
+        randomColumn = rd.randint(0,1)
+        self.weights[randomRow, randomColumn] = rd.random() * 2 - 1
 
     def Create_World(self):
         pyrosim.Start_SDF("world.sdf")
