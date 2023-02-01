@@ -1,7 +1,10 @@
 import numpy as np
 
 ## Number of iterations in simulation
-num=1000
+num = 10000
+
+## Number of parallel hillclimbers
+populationSize = 2
 
 ## Number of generations
 numberofGenerations = 10
