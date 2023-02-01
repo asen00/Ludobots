@@ -15,16 +15,13 @@ class SOLUTION:
 
     def Start_Simulation(self, directOrGUI):
         self.Generate_Brain()
-        os.system("/Users/AntaraSen_1/opt/anaconda3/bin/python test1.py " + directOrGUI + " " + self.myID + " &")
+        os.system("/Users/AntaraSen_1/opt/anaconda3/bin/python test1.py " + directOrGUI + " " + self.myID + " 2&>1 &")
     
     def Wait_For_Simulation_To_End(self):
         while not os.path.exists("fitness"+self.myID+".txt"):
             time.sleep(0.01)
-
-        print("fitness"+self.myID+".txt")
         
         success = False
-
         while not success:
             try:
                 fitnessFile = open("fitness"+self.myID+".txt", "r")

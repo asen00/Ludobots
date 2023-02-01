@@ -51,7 +51,7 @@ class PARALLEL_HILL_CLIMBER:
 
     def Print(self):
         for i in range(c.populationSize):
-            print("\n Parent fitness: ", self.parents[i].fitness, " Child fitness: ", self.children[i].fitness, "\n")
+            print("Robot", i, "\n Parent fitness: ", self.parents[i].fitness, " Child fitness: ", self.children[i].fitness, "\n")
     
     def Select(self):
         for i in range(c.populationSize):
@@ -63,5 +63,5 @@ class PARALLEL_HILL_CLIMBER:
         for i in range(c.populationSize):
             popFitnesses[i] = self.parents[i].fitness
         
-        print(np.max(popFitnesses))
+        #print(np.max(popFitnesses))
         self.parents[np.argmax(popFitnesses)].Start_Simulation("GUI")
