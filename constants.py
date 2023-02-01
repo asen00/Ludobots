@@ -1,7 +1,7 @@
 import numpy as np
 
 ## Number of iterations in simulation
-num=100
+num=1000
 
 ## Number of generations
 numberofGenerations = 10
