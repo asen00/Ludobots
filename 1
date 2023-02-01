@@ -1,15 +1,7 @@
 pybullet build time: Oct 28 2022 16:21:32
-Version = 4.1 Metal - 76.3
-Vendor = Apple
-Renderer = Apple M1
-b3Printf: Selected demo: Physics Server
-startThreads creating 1 threads.
-starting thread 0
-started thread 0 
-MotionThreadFunc thread started
-b3Printf: b3Warning[examples/Importers/ImportURDFDemo/BulletUrdfImporter.cpp,126]:
-
-b3Printf: expected a world element, continuing without it.
+b3Warning[examples/Importers/ImportURDFDemo/BulletUrdfImporter.cpp,126]:
+expected a world element, continuing without it.b3Warning[examples/Importers/ImportURDFDemo/BulletUrdfImporter.cpp,152]:
+URDF file 'body.urdf' not found
 Traceback (most recent call last):
   File "/Users/AntaraSen_1/Documents/GitHub/ludobots_sen/test1.py", line 7, in <module>
     simulation = SIMULATION(directOrGUI, solutionID)
@@ -18,16 +10,3 @@ Traceback (most recent call last):
   File "/Users/AntaraSen_1/Documents/GitHub/ludobots_sen/robot.py", line 14, in __init__
     self.robotId = p.loadURDF("body.urdf")
 pybullet.error: Cannot load URDF file.
-Exception ignored in: <function SIMULATION.__del__ at 0x7fb33077c040>
-Traceback (most recent call last):
-  File "/Users/AntaraSen_1/Documents/GitHub/ludobots_sen/simulation.py", line 43, in __del__
-    p.disconnect()
-pybullet.error: Not connected to physics server.
-numActiveThreads = 0
-stopping threads
-Thread with taskId 0 exiting
-Thread TERMINATED
-destroy semaphore
-semaphore destroyed
-destroy main semaphore
-main semaphore destroyed

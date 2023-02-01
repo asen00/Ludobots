@@ -1,13 +1,17 @@
 import numpy as np
 
 ## Number of iterations in simulation
-num = 10000
+num = 100
 
-## Number of parallel hillclimbers
-populationSize = 2
+## Number of hillclimbers
+populationSize = 1
 
 ## Number of generations
-numberofGenerations = 10
+numberofGenerations = 1
+
+## Number of neurons
+numSensorNeurons = 3
+numMotorNeurons = 2
 
 ## Sinusoidal control of leg motors
 amplitude = np.pi/4
