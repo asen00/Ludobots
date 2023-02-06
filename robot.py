@@ -50,7 +50,7 @@ class ROBOT:
     def Get_Fitness(self):
         stateOfLinkZero = p.getLinkState(self.robotId,0)
         positionOfLinkZero = stateOfLinkZero[0]
-        xCoordinateOfLinkZero = positionOfLinkZero[0]
+        xCoordinateOfLinkZero = positionOfLinkZero[2]
         f = open("tmp"+self.myID+".txt", "w")
         f.write(str(xCoordinateOfLinkZero))
         os.system("mv tmp"+self.myID+".txt fitness"+self.myID+".txt")
