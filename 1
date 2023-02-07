@@ -10,6 +10,14 @@ MotionThreadFunc thread started
 b3Printf: b3Warning[examples/Importers/ImportURDFDemo/BulletUrdfImporter.cpp,126]:
 
 b3Printf: expected a world element, continuing without it.
+numActiveThreads = 0
+stopping threads
+destroy semaphore
+semaphore destroyed
+Thread with taskId 0 exiting
+Thread TERMINATED
+destroy main semaphore
+main semaphore destroyed
 Traceback (most recent call last):
   File "/Users/AntaraSen_1/Documents/GitHub/ludobots_sen/test1.py", line 8, in <module>
     simulation.Run()
@@ -19,18 +27,10 @@ Traceback (most recent call last):
     self.sensors[sensor].Get_Value(timeStep)
   File "/Users/AntaraSen_1/Documents/GitHub/ludobots_sen/sensor.py", line 12, in Get_Value
     self.values[timeStep] = pyrosim.Get_Touch_Sensor_Value_For_Link(self.linkName)
-  File "/Users/AntaraSen_1/Documents/GitHub/ludobots_sen/pyrosim/pyrosim.py", line 53, in Get_Touch_Sensor_Value_For_Link
-    for pt in pts:
-TypeError: 'NoneType' object is not iterable
-Exception ignored in: <function SIMULATION.__del__ at 0x7f7f5057af70>
+  File "/Users/AntaraSen_1/Documents/GitHub/ludobots_sen/pyrosim/pyrosim.py", line 51, in Get_Touch_Sensor_Value_For_Link
+    pts = p.getContactPoints()
+pybullet.error: Not connected to physics server.
+Exception ignored in: <function SIMULATION.__del__ at 0x7fad182b2f70>
 Traceback (most recent call last):
   File "/Users/AntaraSen_1/Documents/GitHub/ludobots_sen/simulation.py", line 43, in __del__
 pybullet.error: Not connected to physics server.
-numActiveThreads = 0
-stopping threads
-destroy semaphore
-semaphore destroyed
-Thread with taskId 0 exiting
-Thread TERMINATED
-destroy main semaphore
-main semaphore destroyed

@@ -17,7 +17,7 @@ class SOLUTION:
     def Start_Simulation(self, directOrGUI):
         self.Generate_Brain()
         self.Generate_Body()
-        os.system("/Users/AntaraSen_1/opt/anaconda3/bin/python test1.py " + directOrGUI + " " + self.myID + " 2&>1 &")
+        os.system("/Users/AntaraSen_1/opt/anaconda3/bin/python test1.py " + directOrGUI + " " + self.myID + " 2>&1 &")
     
     def Wait_For_Simulation_To_End(self):
         while not os.path.exists("fitness"+self.myID+".txt"):
