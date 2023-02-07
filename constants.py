@@ -4,14 +4,14 @@ import numpy as np
 num = 10000
 
 ## Number of hillclimbers
-populationSize = 8
+populationSize = 4
 
 ## Number of generations
-numberofGenerations = 20
+numberofGenerations = 6
 
 ## Number of neurons
-numSensorNeurons = 4
-numMotorNeurons = 8
+numSensorNeurons = 3
+numMotorNeurons = 6
 
 ## Range of oscillatory motion on motors
 motorJointRange = 0.2
@@ -20,4 +20,4 @@ motorJointRange = 0.2
 amplitude = np.pi/4
 frequency = 6
 phase = 0
-maxForce = 50
+maxForce = 200
