@@ -4,17 +4,17 @@ import numpy as np
 num = 10000
 
 ## Number of hillclimbers
-populationSize = 8
+populationSize = 1
 
 ## Number of generations
-numberofGenerations = 20
+numberofGenerations = 3
 
 ## Number of neurons
-numSensorNeurons = 4
-numMotorNeurons = 8
+numSensorNeurons = 1
+numMotorNeurons = 2
 
 ## Range of oscillatory motion on motors
-motorJointRange = 0.2
+motorJointRange = 360
 
 ## Sinusoidal control of leg motors
 amplitude = np.pi/4

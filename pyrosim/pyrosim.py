@@ -108,6 +108,14 @@ def Prepare_To_Simulate(bodyID):
 
 def Send_Cube(name="default",pos=[0,0,0],size=[1,1,1]):
 
+    Send_Link(name,pos,size,"box")
+
+def Send_Sphere(name="default",pos=[0,0,0],size=[0.5]):
+
+    Send_Link(name,pos,size,"sphere")
+
+def Send_Link(name,pos,size,objectType):
+
     global availableLinkIndex
 
     global links
@@ -116,11 +124,11 @@ def Send_Cube(name="default",pos=[0,0,0],size=[1,1,1]):
 
         Start_Model(name,pos)
 
-        link = LINK_SDF(name,pos,size)
+        link = LINK_SDF(name,pos,size,objectType)
 
         links.append(link)
     else:
-        link = LINK_URDF(name,pos,size)
+        link = LINK_URDF(name,pos,size,objectType)
 
         links.append(link)
 
@@ -153,7 +161,7 @@ def Send_Synapse( sourceNeuronName , targetNeuronName , weight ):
     f.write('    <synapse sourceNeuronName = "' + str(sourceNeuronName) + '" targetNeuronName = "' + str(targetNeuronName) + '" weight = "' + str(weight) + '" />\n')
 
  
-def Set_Motor_For_Joint(bodyIndex,jointName,controlMode,targetPosition,maxForce):
+def Set_Motor_For_Joint(bodyIndex,jointName,controlMode,targetVelocity,maxForce):
 
     p.setJointMotorControl2(
 
@@ -163,7 +171,7 @@ def Set_Motor_For_Joint(bodyIndex,jointName,controlMode,targetPosition,maxForce)
 
         controlMode    = controlMode,
 
-        targetPosition = targetPosition,
+        targetVelocity = targetVelocity,
 
         force          = maxForce)
 

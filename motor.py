@@ -7,10 +7,10 @@ class MOTOR:
     def __init__(self, jointName):
         self.jointName = jointName
     
-    def Set_Value(self, robotId, desiredAngle):
+    def Set_Value(self, robotId, desiredVelocity):
         self.motorForce = c.maxForce
         pyrosim.Set_Motor_For_Joint(bodyIndex = robotId, 
                                     jointName = self.jointName, 
-                                    controlMode = p.POSITION_CONTROL,
-                                    targetPosition = desiredAngle,
+                                    controlMode = p.VELOCITY_CONTROL,
+                                    targetVelocity = desiredVelocity,
                                     maxForce = self.motorForce)
