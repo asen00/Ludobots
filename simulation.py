@@ -19,7 +19,7 @@ class SIMULATION:
         p.setGravity(0,0,-9.8)
 
         self.world = WORLD()
-        self.robot = ROBOT(solutionID)
+        self.robot = ROBOT(solutionID, self.world)
 
     def Run(self):
         for timeStep in range(c.num):
@@ -28,7 +28,7 @@ class SIMULATION:
             self.robot.Think()
             self.robot.Act(self.robot.robotId, timeStep)
 
-            t=1/3000
+            t=1/300000000
             if self.directOrGUI == "GUI":
                 time.sleep(t)
     

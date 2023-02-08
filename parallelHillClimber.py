@@ -55,7 +55,7 @@ class PARALLEL_HILL_CLIMBER:
     
     def Select(self):
         for i in range(c.populationSize):
-            if self.parents[i].fitness < self.children[i].fitness:
+            if self.parents[i].fitness > self.children[i].fitness:
                 self.parents[i] = self.children[i]
     
     def Show_Best(self):
@@ -64,4 +64,4 @@ class PARALLEL_HILL_CLIMBER:
             popFitnesses[i] = self.parents[i].fitness
         
         #print(np.max(popFitnesses))
-        self.parents[np.argmax(popFitnesses)].Start_Simulation("GUI")
+        self.parents[np.argmin(popFitnesses)].Start_Simulation("GUI")

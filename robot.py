@@ -2,15 +2,18 @@ import pybullet as p
 import pyrosim.pyrosim as pyrosim
 import os
 import constants as c
+import numpy as np
 
 from sensor import SENSOR
 from motor import MOTOR
 from pyrosim.neuralNetwork import NEURAL_NETWORK
 
 class ROBOT:
-    def __init__(self, solutionID):
+    def __init__(self, solutionID, world):
         self.sensors = {}
         self.motors = {}
+
+        self.world = world
 
         self.robotId = p.loadURDF("body.urdf")
         pyrosim.Prepare_To_Simulate(self.robotId)
@@ -48,10 +51,26 @@ class ROBOT:
                 self.motors[jointName].Set_Value(robotId, desiredAngle)
     
     def Get_Fitness(self):
-        stateOfLinkZero = p.getLinkState(self.robotId,0)
-        positionOfLinkZero = stateOfLinkZero[0]
-        xCoordinateOfLinkZero = positionOfLinkZero[0]
+        # print("In robot.Get_Fitness()")
+        # stateOfLinkZero = p.getLinkState(self.robotId,0)
+        # positionOfLinkZero = stateOfLinkZero[0]
+        # xCoordinateOfLinkZero = positionOfLinkZero[0]
+        # f = open("tmp"+self.myID+".txt", "w")
+        # f.write(str(xCoordinateOfLinkZero))
+        # os.system("mv tmp"+self.myID+".txt fitness"+self.myID+".txt")
+        # f.close()
+
+        #positionOfBoxCorner = [6.5,6,2.5]
+        stateOfTracker = p.getLinkState(self.robotId,4)
+        positionOfBox = p.getBasePositionAndOrientation(self.world.bodyID)[0]
+        positionOfTracker = stateOfTracker[0]
+        print(positionOfBox)
+        xdist = np.abs(positionOfBox[0] - positionOfTracker[0])
+        ydist = np.abs(positionOfBox[1] - positionOfTracker[1])
+        #zdist = np.abs(positionOfBoxCorner[2] - positionOfTracker[2])
+        optimize = xdist*ydist
+
         f = open("tmp"+self.myID+".txt", "w")
-        f.write(str(xCoordinateOfLinkZero))
+        f.write(str(optimize))
         os.system("mv tmp"+self.myID+".txt fitness"+self.myID+".txt")
         f.close()

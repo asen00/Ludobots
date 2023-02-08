@@ -4,10 +4,10 @@ import numpy as np
 num = 10000
 
 ## Number of hillclimbers
-populationSize = 4
+populationSize = 1
 
 ## Number of generations
-numberofGenerations = 6
+numberofGenerations = 1
 
 ## Number of neurons
 numSensorNeurons = 3
