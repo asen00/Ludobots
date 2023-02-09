@@ -61,14 +61,20 @@ class ROBOT:
         # f.close()
 
         #positionOfBoxCorner = [6.5,6,2.5]
-        stateOfTracker = p.getLinkState(self.robotId,4)
         positionOfBox = p.getBasePositionAndOrientation(self.world.bodyID)[0]
+
+        # stateOfZero = p.getLinkState(self.robotId,0)
+        # positionOfZero = stateOfZero[0]
+        # xdistZ = np.abs(positionOfBox[0] - positionOfZero[0])
+        # ydistZ = np.abs(positionOfBox[1] - positionOfZero[1])
+
+        stateOfTracker = p.getLinkState(self.robotId,4)
         positionOfTracker = stateOfTracker[0]
         print(positionOfBox)
-        xdist = np.abs(positionOfBox[0] - positionOfTracker[0])
-        ydist = np.abs(positionOfBox[1] - positionOfTracker[1])
-        #zdist = np.abs(positionOfBoxCorner[2] - positionOfTracker[2])
-        optimize = xdist*ydist
+        xdistT = np.abs(positionOfBox[0]+1.5 - positionOfTracker[0])
+        ydistT = np.abs(positionOfBox[1]-1 - positionOfTracker[1])
+
+        optimize = xdistT*ydistT
 
         f = open("tmp"+self.myID+".txt", "w")
         f.write(str(optimize))
