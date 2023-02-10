@@ -1,3 +1,6 @@
-from snake import SNAKE
+from snakeSimulation import SIMULATION
+import os
 
-SNAKE().Generate_Snake_Body()
+os.system("rm snake.urdf")
+sim = SIMULATION([0,0,5])
+sim.Run()
