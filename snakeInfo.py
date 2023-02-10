@@ -10,7 +10,7 @@ class SNAKE_INFO:
         self.origin = origin
         self.links = {}
         self.joints = {}
-        self.linkXsize = np.random.random(size=self.numLinks)*0.25+0.75
+        self.linkXsize = np.random.random(size=self.numLinks)*rd.random()+rd.random()
 
     '''def Get_Links(self):
         ## Absolute position
@@ -47,18 +47,18 @@ class SNAKE_INFO:
     def Get_Joints_and_Links(self):
         self.links[0] = LINK(linkName = 0, 
                             pos = self.origin, 
-                            size = [self.linkXsize[0], rd.random()*0.25+0.75, rd.random()*0.25+0.75], 
+                            size = [self.linkXsize[0], rd.random()*rd.random()+rd.random(), rd.random()*rd.random()+rd.random()], 
                             sensorYN = rd.randint(0,1))
         self.joints[0] = JOINT(jointName = "0_1", 
                                parentLink = "0", 
                                childLink = "1", 
-                               jointPos = self.links[0].Get_Front_Joint_Pos(), 
+                               jointPos = [self.origin[0]+self.linkXsize[0]/2, self.origin[1], self.origin[2]], 
                                jointAxis = self.Get_Joint_Axis(rd.randint(0,1)))
 
         for i in range(1, self.numLinks):
             self.links[i] = LINK(linkName = i, 
                                     pos = [self.linkXsize[i]/2, 0, 0], 
-                                    size = [self.linkXsize[i], rd.random()*0.25+0.75, rd.random()*0.25+0.75],
+                                    size = [self.linkXsize[i], rd.random()*rd.random()+rd.random(), rd.random()*rd.random()+rd.random()],
                                     sensorYN = rd.randint(0,1))
             if i < self.numLinks-1:
                 parentLink = str(i)

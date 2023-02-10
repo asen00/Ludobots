@@ -7,8 +7,7 @@ from snakeInfo import SNAKE_INFO
 
 class SNAKE:
     def __init__(self, origin):
-        self.numLinks = 5
-        # self.numLinks = rd.randint(2,7)
+        self.numLinks = rd.randint(6,15)
         self.info = SNAKE_INFO(self.numLinks, origin)
         self.links = self.info.Get_Joints_and_Links()[0]
         self.joints = self.info.Get_Joints_and_Links()[1]
