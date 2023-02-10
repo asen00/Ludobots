@@ -15,7 +15,7 @@ numSensorNeurons = 3
 numMotorNeurons = 6
 
 ## Range of oscillatory motion on motors
-motorJointRange = 0.2
+motorJointRange = 1
 
 ## Sinusoidal control of leg motors
 amplitude = np.pi/4

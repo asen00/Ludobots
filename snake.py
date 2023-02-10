@@ -48,6 +48,6 @@ class SNAKE:
 
         for currentRow in range(numSensorNeurons):
             for currentColumn in range(numMotorNeurons):
-                pyrosim.Send_Synapse(sourceNeuronName = currentRow , targetNeuronName = currentColumn + numMotorNeurons , weight = rd.random())
+                pyrosim.Send_Synapse(sourceNeuronName = currentRow, targetNeuronName = currentColumn + numSensorNeurons , weight = rd.random())
         
         pyrosim.End()

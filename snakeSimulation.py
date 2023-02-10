@@ -19,6 +19,9 @@ class SIMULATION:
     def Run(self):
         for timeStep in range(c.num):
             p.stepSimulation()
+            self.snake.Sense(timeStep)
+            self.snake.Think()
+            self.snake.Act(self.snake.robotId, timeStep)
 
             t=1/3000
             time.sleep(t)

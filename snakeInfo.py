@@ -57,7 +57,7 @@ class SNAKE_INFO:
 
         for i in range(1, self.numLinks):
             self.links[i] = LINK(linkName = i, 
-                                    pos = [self.linkXsize[i]/2, self.origin[1], self.origin[2]], 
+                                    pos = [self.linkXsize[i]/2, 0, 0], 
                                     size = [self.linkXsize[i], rd.random()*0.25+0.75, rd.random()*0.25+0.75],
                                     sensorYN = rd.randint(0,1))
             if i < self.numLinks-1:
@@ -67,7 +67,7 @@ class SNAKE_INFO:
                 self.joints[i] = JOINT(jointName = jointName, 
                                         parentLink = parentLink, 
                                         childLink = childLink, 
-                                        jointPos = [self.linkXsize[i], self.origin[1], self.origin[2]], 
+                                        jointPos = [self.linkXsize[i], 0, 0], 
                                         jointAxis = self.Get_Joint_Axis(rd.randint(0,1)))
         
         return self.links, self.joints
