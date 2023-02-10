@@ -1,4 +1,5 @@
 import numpy as np
+import random as rd
 
 ## Number of iterations in simulation
 num = 10000
@@ -21,3 +22,6 @@ amplitude = np.pi/4
 frequency = 6
 phase = 0
 maxForce = 200
+
+## Snake
+numLinks = rd.randint(0,10)
