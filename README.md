@@ -1,20 +1,18 @@
-# DockBot
+# Random Snake
 
 ## Introduction
 Created using [Ludobots course](https://www.reddit.com/r/ludobots/wiki/installation/).
 
-## Motivation
-This is an asymmetrical robot, created to simulate the behavior shown in this [video](https://youtu.be/UeAzWnlgWWE). This robot is built to have asymmetric morphology so that its locomotion is curvilinear. Thus, the hope is that when two such robots move together, their paths complement each other and the whole robot moves together in a straight line. This will be an example of creating new heirarchical behavior.
+## About the Assignment
+This is a fully random robot, i.e., the number of links it has, their sizes, and their ability to sense their surroundings are generated using the [numpy.random.random()](https://numpy.org/doc/stable/reference/random/generated/numpy.random.random.html) and [random.randint()](https://www.w3schools.com/python/ref_random_randint.asp) functions. 
 
-## Plan
-The first step of this process is to build a robot that can move towards a particular point, as shown in the image below.
-![IMG_0297](https://user-images.githubusercontent.com/114432525/217398896-f715f12b-a6ed-4fe2-8990-bb6268372af5.PNG)
+For reference, links with sensors are colored green, those without are blue, and there is a blue world element present.
 
-## Current Work
-### Unevolved
-![7acnn1.gif](7acnn1.gif)
-### Evolved
-![7acn9g.gif](7acn9g.gif)
+## How It Was Made
+I used object classes to store information about each link and then passed these attributes to [pyrosim](https://github.com/jbongard/pyrosim), which then called [pybullet](https://pybullet.org/wordpress/) functions.  
 
-## Next Steps
-The code in this branch of my repository is successful in getting the robot to detect the docking station and move towards it, however does not yet dock. The next steps will be to add photo sensors to aid in docking, then duplicating the robot so that both robots dock into each other, and finally modifying the fitness function to achieve linear motion.
+## Relevant Files
+All the files related to this project have the prefix "snake", e.g. "snakeJoint.py". To run the code, please use "snakeMain.py".
+
+## Ability for Expansion
+Since I modeled my class heirarchy after the Ludobots course (linked above), I have room to expand into evolving this snake via random mutations.
