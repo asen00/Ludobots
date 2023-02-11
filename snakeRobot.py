@@ -50,17 +50,4 @@ class ROBOT:
                 self.motors[jointName].Set_Value(robotId, desiredAngle)
     
     def Get_Fitness(self):
-        positionOfBox = p.getBasePositionAndOrientation(self.world.bodyID)[0]
-
-        stateOfTracker = p.getLinkState(self.robotId,4)
-        positionOfTracker = stateOfTracker[0]
-        print(positionOfBox)
-        xdistT = np.abs(positionOfBox[0]+1.5 - positionOfTracker[0])
-        ydistT = np.abs(positionOfBox[1]-1 - positionOfTracker[1])
-
-        optimize = xdistT*ydistT
-
-        f = open("tmp"+self.myID+".txt", "w")
-        f.write(str(optimize))
-        os.system("mv tmp"+self.myID+".txt fitness"+self.myID+".txt")
-        f.close()
+        pass

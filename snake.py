@@ -37,7 +37,7 @@ class SNAKE:
         numSensorNeurons = 0
         for i in range(self.numLinks):
             if self.links[i].sensorYN == 1: ## link has a sensor
-                pyrosim.Send_Sensor_Neuron(name = 0 , linkName = self.links[i].linkName)
+                pyrosim.Send_Sensor_Neuron(name = numSensorNeurons, linkName = self.links[i].linkName)
                 numSensorNeurons += 1
         
         numMotorNeurons = 0
@@ -46,7 +46,7 @@ class SNAKE:
             numMotorNeurons += 1
 
         for currentRow in range(numSensorNeurons):
-            for currentColumn in range(numMotorNeurons):
-                pyrosim.Send_Synapse(sourceNeuronName = currentRow, targetNeuronName = currentColumn + numSensorNeurons , weight = rd.random())
+            for currentColumn in range(numSensorNeurons, numMotorNeurons):
+                pyrosim.Send_Synapse(sourceNeuronName = currentRow, targetNeuronName = currentColumn, weight = rd.random())
         
         pyrosim.End()
