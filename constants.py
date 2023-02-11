@@ -5,10 +5,10 @@ import random as rd
 num = 10000
 
 ## Number of hillclimbers
-populationSize = 6
+populationSize = 1
 
 ## Number of generations
-numberofGenerations = 30
+numberofGenerations = 4
 
 ## Number of neurons
 numSensorNeurons = 3
