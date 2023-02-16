@@ -7,8 +7,8 @@ from horseInfo import HORSE_INFO
 
 class HORSE:
     def __init__(self, origin):
-        self.numLinks = 10
-        #self.numLinks = rd.randint(6,15)
+        # self.numLinks = 5
+        self.numLinks = rd.randint(6,15)
         self.info = HORSE_INFO(self.numLinks, origin)
         self.links = self.info.Get_Joints_and_Links()[0]
         self.joints = self.info.Get_Joints_and_Links()[1]
@@ -26,7 +26,7 @@ class HORSE:
                 pyrosim.Send_Joint(name = self.joints[i].jointName,
                                     parent= self.joints[i].parentLink, 
                                     child = self.joints[i].childLink, 
-                                    type = "revolute", 
+                                    type = self.joints[i].jointType, 
                                     position = self.joints[i].jointPos, 
                                     jointAxis = self.joints[i].jointAxis)
         
@@ -47,7 +47,7 @@ class HORSE:
             numMotorNeurons += 1
 
         for currentRow in range(numSensorNeurons):
-            for currentColumn in range(numSensorNeurons, numMotorNeurons):
+            for currentColumn in range(numMotorNeurons):
                 pyrosim.Send_Synapse(sourceNeuronName = currentRow, targetNeuronName = currentColumn, weight = rd.random())
         
         pyrosim.End()

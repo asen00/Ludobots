@@ -25,7 +25,7 @@ class SNAKE:
                 pyrosim.Send_Joint(name = self.joints[i].jointName, 
                                     parent= self.joints[i].parentLink, 
                                     child = self.joints[i].childLink, 
-                                    type = "revolute", 
+                                    type = self.joints[i].jointType,
                                     position = self.joints[i].jointPos, 
                                     jointAxis = self.joints[i].jointAxis)
         

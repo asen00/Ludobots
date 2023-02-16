@@ -52,6 +52,7 @@ class SNAKE_INFO:
         self.joints[0] = JOINT(jointName = "0_1", 
                                parentLink = "0", 
                                childLink = "1", 
+                               jointType = "revolute",
                                jointPos = [self.origin[0]+self.linkXsize[0]/2, self.origin[1], self.origin[2]], 
                                jointAxis = self.Get_Joint_Axis(rd.randint(0,1)))
 
@@ -67,6 +68,7 @@ class SNAKE_INFO:
                 self.joints[i] = JOINT(jointName = jointName, 
                                         parentLink = parentLink, 
                                         childLink = childLink, 
+                                        jointType = "revolute",
                                         jointPos = [self.linkXsize[i], 0, 0], 
                                         jointAxis = self.Get_Joint_Axis(rd.randint(0,1)))
         
