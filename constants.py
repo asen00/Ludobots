@@ -2,7 +2,7 @@ import numpy as np
 import random as rd
 
 ## Number of iterations in simulation
-num = 10000
+num = 10000000
 
 ## Number of hillclimbers
 populationSize = 1

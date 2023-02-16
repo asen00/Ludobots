@@ -7,7 +7,8 @@ from horseInfo import HORSE_INFO
 
 class HORSE:
     def __init__(self, origin):
-        self.numLinks = rd.randint(6,15)
+        self.numLinks = 10
+        #self.numLinks = rd.randint(6,15)
         self.info = HORSE_INFO(self.numLinks, origin)
         self.links = self.info.Get_Joints_and_Links()[0]
         self.joints = self.info.Get_Joints_and_Links()[1]
@@ -17,12 +18,12 @@ class HORSE:
         self.Generate_Snake_Brain()
 
     def Generate_Snake_Body(self):
-        pyrosim.Start_URDF("snake.urdf")
+        pyrosim.Start_URDF("horse.urdf")
         
         for i in range(self.numLinks):
             pyrosim.Send_Cube(name = str(i), pos = self.links[i].pos, size = self.links[i].size, sensorYN=self.links[i].sensorYN)
             if i < self.numLinks-1:
-                pyrosim.Send_Joint(name = self.joints[i].jointName, 
+                pyrosim.Send_Joint(name = self.joints[i].jointName,
                                     parent= self.joints[i].parentLink, 
                                     child = self.joints[i].childLink, 
                                     type = "revolute", 
@@ -32,7 +33,7 @@ class HORSE:
         pyrosim.End()
     
     def Generate_Snake_Brain(self):
-        pyrosim.Start_NeuralNetwork("snake.nndf")
+        pyrosim.Start_NeuralNetwork("horse.nndf")
         
         numSensorNeurons = 0
         for i in range(self.numLinks):
