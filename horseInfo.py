@@ -20,8 +20,6 @@ class HORSE_INFO:
             for dim in range(3):
                 if self.propAxis[link] == dim:
                     self.add_vec[link][dim] = self.linksize[link][dim]/2
-        
-        return self.add_vec
 
     def Get_Joints_and_Links(self):
         self.Choose_Propagation_Axis()
