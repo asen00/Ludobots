@@ -7,11 +7,12 @@ from horseInfo import HORSE_INFO
 
 class HORSE:
     def __init__(self, origin):
-        # self.numLinks = 5
+        #self.numLinks = 5
         self.numLinks = rd.randint(6,15)
         self.info = HORSE_INFO(self.numLinks, origin)
-        self.links = self.info.Get_Joints_and_Links()[0]
-        self.joints = self.info.Get_Joints_and_Links()[1]
+        self.linksAndjoints = self.info.Get_Joints_and_Links()
+        self.links = self.linksAndjoints[0]
+        self.joints = self.linksAndjoints[1]
 
     def Generate_Simulation(self):
         self.Generate_Snake_Body()

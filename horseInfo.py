@@ -7,30 +7,30 @@ from snakeJoint import JOINT
 class HORSE_INFO:
     def __init__(self, numLinks, origin):
         self.numLinks = numLinks
+        self.numJoints = self.numLinks - 1
         self.origin = origin
         self.links = {}
         self.joints = {}
         self.linksize = np.random.uniform(low=0.25, high=0.75, size=(self.numLinks, 3))
+
+    def Choose_Propagation_Stream(self):
+        self.propAxis = np.random.randint(low=0, high=3, size=self.numJoints)
     
-    def Choose_Propagation_Axis(self):
-        self.propAxis = np.random.randint(low=0, high=3, size=self.numLinks)
-        
-        self.relJointPos = np.zeros((self.numLinks, 3))
         self.relLinkPos = np.zeros((self.numLinks, 3))
-        for link in range(self.numLinks):
-            for dim in range(3):
-                if self.propAxis[link] == self.propAxis[link-1]:
-                    if self.propAxis[link] == dim:
-                        self.relJointPos[link][dim] = self.linksize[link][dim]
-                        self.relLinkPos[link][dim] = self.linksize[link][dim]/2
-                else:
-                    if self.propAxis[link] == dim:
-                        self.relJointPos[link][dim] = self.linksize[link][dim]/2
-                        self.relJointPos[link][self.propAxis[link-1]] = self.linksize[link][self.propAxis[link-1]]/2
-                        self.relLinkPos[link][dim] = self.linksize[link][dim]/2
+        for link in range(1, self.numLinks):
+            self.relLinkPos[link][self.propAxis[link-1]] = self.linksize[link][self.propAxis[link-1]]/2
+        
+        self.relJointPos = np.zeros((self.numJoints, 3))
+        self.relJointPos[0][self.propAxis[0]] = self.linksize[0][self.propAxis[0]]/2
+        for joint in range(1, self.numJoints):
+            if self.propAxis[joint] == self.propAxis[joint-1]:
+                self.relJointPos[joint][self.propAxis[joint]] = self.linksize[joint][self.propAxis[joint]]
+            else:
+                self.relJointPos[joint][self.propAxis[joint-1]] = self.linksize[joint][self.propAxis[joint-1]]/2
+                self.relJointPos[joint][self.propAxis[joint]] = self.linksize[joint][self.propAxis[joint]]/2
 
     def Get_Joints_and_Links(self):
-        self.Choose_Propagation_Axis()
+        self.Choose_Propagation_Stream()
 
         self.links[0] = LINK(linkName = 0,
                             pos = self.origin, 
@@ -56,7 +56,7 @@ class HORSE_INFO:
                                                 parentLink = parentLink, 
                                                 childLink = childLink,
                                                 jointType = "revolute",
-                                                jointPos = self.relJointPos[linkIndex]*2,
+                                                jointPos = self.relJointPos[linkIndex],
                                                 jointAxis = self.Get_Joint_Axis(self.propAxis[linkIndex], rd.randint(0, 1)))
         
         return self.links, self.joints
