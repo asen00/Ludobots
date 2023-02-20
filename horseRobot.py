@@ -19,6 +19,7 @@ class ROBOT:
         self.horse = HORSE(origin)
         self.horse.Generate_Simulation()
         self.robotId = p.loadURDF("horse.urdf")
+        #self.robotId = p.loadURDF("horse.urdf", flags = p.URDF_USE_SELF_COLLISION | p.URDF_USE_SELF_COLLISION_INCLUDE_PARENT) # TURNS ON SELF-COLLISION
         pyrosim.Prepare_To_Simulate(self.robotId)
 
         self.nn = NEURAL_NETWORK("horse.nndf")
