@@ -13,6 +13,7 @@ class HORSE:
         self.linksAndjoints = self.info.Get_Joints_and_Links()
         self.links = self.linksAndjoints[0]
         self.joints = self.linksAndjoints[1]
+        self.totalLinks = self.linksAndjoints[2]
 
     def Generate_Simulation(self):
         self.Generate_Snake_Body()
@@ -21,9 +22,9 @@ class HORSE:
     def Generate_Snake_Body(self):
         pyrosim.Start_URDF("horse.urdf")
         
-        for i in range(self.numLinks):
+        for i in range(self.totalLinks):
             pyrosim.Send_Cube(name = str(i), pos = self.links[i].pos, size = self.links[i].size, sensorYN=self.links[i].sensorYN)
-            if i < self.numLinks-1:
+            if i < self.totalLinks-1:
                 pyrosim.Send_Joint(name = self.joints[i].jointName,
                                     parent= self.joints[i].parentLink, 
                                     child = self.joints[i].childLink, 
@@ -32,18 +33,18 @@ class HORSE:
                                     jointAxis = self.joints[i].jointAxis)
         
         pyrosim.End()
-    
+
     def Generate_Snake_Brain(self):
         pyrosim.Start_NeuralNetwork("horse.nndf")
         
         numSensorNeurons = 0
-        for i in range(self.numLinks):
+        for i in range(self.totalLinks):
             if self.links[i].sensorYN == 1: ## link has a sensor
                 pyrosim.Send_Sensor_Neuron(name = numSensorNeurons, linkName = self.links[i].linkName)
                 numSensorNeurons += 1
         
         numMotorNeurons = 0
-        for i in range(self.numLinks-1):
+        for i in range(self.totalLinks-1):
             pyrosim.Send_Motor_Neuron(name = numSensorNeurons+i , jointName = self.joints[i].jointName)
             numMotorNeurons += 1
 
