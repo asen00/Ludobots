@@ -64,11 +64,13 @@ class HORSE_INFO:
             relJointPos[0][self.mainFace] = self.mainDir * self.mainSizes[parent][self.mainFace]/2
             relJointPos[0][limbFace] = limbDir * self.mainSizes[parent][limbFace]/2
             
-            relLinkPos[0][limbFace] = limbDir * linkSizes[0][limbFace]/2
+            relLinkPos[0][limbFace] = limbDir * linkSizes[parent][limbFace]/2
 
         for subLimb in range(1, numSubLinks):
             relJointPos[subLimb][limbFace] = limbDir * linkSizes[subLimb-1][limbFace]
             relLinkPos[subLimb][limbFace] = limbDir * linkSizes[subLimb][limbFace]/2
+
+        print("Figuring things out. relJointPos: ", relJointPos, "relLinkPos: ", relLinkPos,"linkSizes: ", linkSizes)
 
         return limbFace, relLinkPos, relJointPos, linkSizes
 
@@ -109,10 +111,12 @@ class HORSE_INFO:
         
         faceOpt.remove(self.mainFace)
         self.totalLinkTally = self.numLinks
+        #limbYN = [0,1,1,0,0]
         limbYN = np.random.randint(low=0, high=3, size=self.numLinks)
         for parent in range(self.numLinks):
             if limbYN[parent] == 1: ## limb grown from only one direction on random axis
                 numSubLimbs = rd.randint(1, 5)
+                #numSubLimbs = 3
                 limbStructure = self.Construct_Limb(parent, numSubLimbs, rd.choice(faceOpt), rd.choice(dirOpt))
                 for subLimb in range(numSubLimbs):
                     childLink = str(self.totalLinkTally)

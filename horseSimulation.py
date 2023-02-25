@@ -22,7 +22,7 @@ class SIMULATION:
             p.stepSimulation()
             self.snake.Sense(timeStep)
             self.snake.Think()
-            self.snake.Act(self.snake.robotId, timeStep)
+            #self.snake.Act(self.snake.robotId, timeStep)
 
             t=1/3000
             time.sleep(t)
