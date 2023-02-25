@@ -5,11 +5,11 @@ from snakeLink import LINK
 from snakeJoint import JOINT
 
 class HORSE_INFO:
-    def __init__(self, numLinks, origin):
+    def __init__(self, numLinks):
         self.numLinks = numLinks
-        self.origin = origin
         self.links = {}
         self.joints = {}
+        self.origin = [0,0,5]
 
     def Choose_Link_Sizes(self, numLinks):
         snakeLinkSizes = np.random.uniform(low=0.25, high=0.75, size=(numLinks, 3))
@@ -63,14 +63,12 @@ class HORSE_INFO:
         else:
             relJointPos[0][self.mainFace] = self.mainDir * self.mainSizes[parent][self.mainFace]/2
             relJointPos[0][limbFace] = limbDir * self.mainSizes[parent][limbFace]/2
-            
-            relLinkPos[0][limbFace] = limbDir * linkSizes[parent][limbFace]/2
+
+            relLinkPos[0][limbFace] = limbDir * linkSizes[0][limbFace]/2
 
         for subLimb in range(1, numSubLinks):
             relJointPos[subLimb][limbFace] = limbDir * linkSizes[subLimb-1][limbFace]
             relLinkPos[subLimb][limbFace] = limbDir * linkSizes[subLimb][limbFace]/2
-
-        print("Figuring things out. relJointPos: ", relJointPos, "relLinkPos: ", relLinkPos,"linkSizes: ", linkSizes)
 
         return limbFace, relLinkPos, relJointPos, linkSizes
 

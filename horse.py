@@ -1,26 +1,69 @@
-import pybullet as p
-import pybullet_data
 import pyrosim.pyrosim as pyrosim
 import random as rd
+import numpy as np
+import time
+import os
 
 from horseInfo import HORSE_INFO
 
-class HORSE:
-    def __init__(self, origin):
+class HORSE_SOLUTION:
+    def __init__(self, solutionID):
+        self.myID = str(solutionID)
+
         #self.numLinks = 5
         self.numLinks = rd.randint(1, 5)
-        self.info = HORSE_INFO(self.numLinks, origin)
+        self.info = HORSE_INFO(self.numLinks)
         self.linksAndjoints = self.info.Get_Joints_and_Links()
         self.links = self.linksAndjoints[0]
         self.joints = self.linksAndjoints[1]
         self.totalLinks = self.linksAndjoints[2]
 
-    def Generate_Simulation(self):
-        self.Generate_Snake_Body()
-        self.Generate_Snake_Brain()
+        self.numSensorNeurons = 0
+        for i in range(self.totalLinks):
+            if self.links[i].sensorYN == 1: ## link has a sensor
+                self.numSensorNeurons += 1
+        self.numMotorNeurons = 0
+        for i in range(self.totalLinks-1):
+            self.numMotorNeurons += 1
+        self.weights = (2*np.random.rand(self.numSensorNeurons,self.numMotorNeurons))-1
 
-    def Generate_Snake_Body(self):
-        pyrosim.Start_URDF("horse.urdf")
+    def Set_ID(self, childID):
+        self.myID = str(childID)
+
+    def Start_Simulation(self, directOrGUI):
+        self.Generate_Body()
+        self.Generate_Brain()
+        os.system("/Users/AntaraSen_1/opt/anaconda3/bin/python horseSimulate.py " + " " + directOrGUI + " " + self.myID + " 2>&1 &")
+    
+    def Wait_For_Simulation_To_End(self):
+        while not os.path.exists("HORSEfitness"+self.myID+".txt"):
+            time.sleep(0.01)
+        
+        success = False
+        while not success:
+            try:
+                fitnessFile = open("HORSEfitness"+self.myID+".txt", "r")
+                self.fitness = float(fitnessFile.read())
+                #print(self.fitness)
+                fitnessFile.close()
+                success = True
+            except:
+                time.sleep(0.01)
+        
+        os.system("rm HORSEfitness"+self.myID+".txt")
+
+    def Mutate(self):
+        randomRow = rd.randint(0,self.numSensorNeurons-1)
+        randomColumn = rd.randint(0,self.numMotorNeurons-1)
+        self.weights[randomRow, randomColumn] = rd.random() * 2 - 1
+
+    def Create_World(self):
+        pyrosim.Start_SDF("world.sdf")
+        pyrosim.Send_Cube(name="Box", pos=[5,-3,0] , size=[10,1,0.25])
+        pyrosim.End()
+
+    def Generate_Body(self):
+        pyrosim.Start_URDF("horse"+str(self.myID)+".urdf")
         
         for i in range(self.totalLinks):
             pyrosim.Send_Cube(name = str(i), pos = self.links[i].pos, size = self.links[i].size, sensorYN=self.links[i].sensorYN)
@@ -31,25 +74,25 @@ class HORSE:
                                     type = self.joints[i].jointType, 
                                     position = self.joints[i].jointPos, 
                                     jointAxis = self.joints[i].jointAxis)
-        
+
         pyrosim.End()
 
-    def Generate_Snake_Brain(self):
-        pyrosim.Start_NeuralNetwork("horse.nndf")
+    def Generate_Brain(self):
+        pyrosim.Start_NeuralNetwork("horse"+str(self.myID)+".nndf")
         
-        numSensorNeurons = 0
+        sensorCount = 0
         for i in range(self.totalLinks):
             if self.links[i].sensorYN == 1: ## link has a sensor
-                pyrosim.Send_Sensor_Neuron(name = numSensorNeurons, linkName = self.links[i].linkName)
-                numSensorNeurons += 1
+                pyrosim.Send_Sensor_Neuron(name = sensorCount, linkName = self.links[i].linkName)
+                sensorCount += 1
         
-        numMotorNeurons = 0
+        motorCount = 0
         for i in range(self.totalLinks-1):
-            pyrosim.Send_Motor_Neuron(name = numSensorNeurons+i , jointName = self.joints[i].jointName)
-            numMotorNeurons += 1
+            pyrosim.Send_Motor_Neuron(name = sensorCount+i , jointName = self.joints[i].jointName)
+            motorCount += 1
 
-        for currentRow in range(numSensorNeurons):
-            for currentColumn in range(numMotorNeurons):
-                pyrosim.Send_Synapse(sourceNeuronName = currentRow, targetNeuronName = currentColumn, weight = rd.random())
+        for currentRow in range(self.numSensorNeurons):
+            for currentColumn in range(self.numMotorNeurons):
+                pyrosim.Send_Synapse(sourceNeuronName = currentRow, targetNeuronName = currentColumn, weight = self.weights[currentRow][currentColumn])
         
         pyrosim.End()

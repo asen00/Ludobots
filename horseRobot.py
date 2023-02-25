@@ -4,28 +4,28 @@ import os
 import constants as c
 import numpy as np
 
-from horse import HORSE
 from sensor import SENSOR
 from motor import MOTOR
 from pyrosim.neuralNetwork import NEURAL_NETWORK
 
 class ROBOT:
-    def __init__(self, world, origin):
+    def __init__(self, solutionID, world):
         self.sensors = {}
         self.motors = {}
 
         self.world = world
-
-        self.horse = HORSE(origin)
-        self.horse.Generate_Simulation()
-        self.robotId = p.loadURDF("horse.urdf")
-        #self.robotId = p.loadURDF("horse.urdf", flags = p.URDF_USE_SELF_COLLISION | p.URDF_USE_SELF_COLLISION_INCLUDE_PARENT) # TURNS ON SELF-COLLISION
+        
+        self.myID = str(solutionID)
+        
+        self.robotId = p.loadURDF("horse"+self.myID+".urdf")
         pyrosim.Prepare_To_Simulate(self.robotId)
 
-        self.nn = NEURAL_NETWORK("horse.nndf")
+        self.nn = NEURAL_NETWORK("horse"+self.myID+".nndf")
         
         self.Prepare_To_Sense()
         self.Prepare_To_Act()
+
+        os.system(f"rm brain{solutionID}.nndf")
     
     def Prepare_To_Sense(self):
         for linkName in pyrosim.linkNamesToIndices:
@@ -51,4 +51,10 @@ class ROBOT:
                 self.motors[jointName].Set_Value(robotId, desiredAngle)
     
     def Get_Fitness(self):
-        pass
+        stateOfLinkZero = p.getLinkState(self.robotId, 0)
+        positionOfLinkZero = stateOfLinkZero[0]
+        xCoordinateOfLinkZero = positionOfLinkZero[0]
+        f = open("tmp"+self.myID+".txt", "w")
+        f.write(str(xCoordinateOfLinkZero))
+        f.close()
+        os.system("mv tmp"+self.myID+".txt HORSEfitness"+self.myID+".txt")
