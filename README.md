@@ -1,4 +1,4 @@
-# Random Snake
+# Random 3D Creature
 
 ## Introduction
 Created using [Ludobots course](https://www.reddit.com/r/ludobots/wiki/installation/).
@@ -11,11 +11,10 @@ For reference, links with sensors are colored green, those without are blue, and
 ## How It Was Made
 I used object classes to store information about each link and then passed these attributes to [pyrosim](https://github.com/jbongard/pyrosim), which then called [pybullet](https://pybullet.org/wordpress/) functions.
 
-One of the biggest challenges was learning how to keep randomly-generated joints and links flush with each other. The image below shows the logic I followed to ensure jointed morphologies.
-![IMG_0304](https://user-images.githubusercontent.com/114432525/218278297-89c89ccc-eff6-4dbe-afb5-6bc246cd1623.jpg)
+To mitigate self-collisions, the method horseInfo.Constuct_Limb() was supposed to sprout limbs in a continuous fashion in the direction of limb growth. However, I think there is a tiny bug here which is making my joints form from within the previous link. It is also causing certain links to be spaced out more than they should be. I really have no idea if the bug is in my code or my logic. (I have tried debugging this one method for 4 hours and am not sure how to proceed.) Below is an image of the logic I was trying to follow.
+![IMG_0338](https://user-images.githubusercontent.com/114432525/220254009-0c9f87d3-f952-491c-b759-99d3a98829f8.PNG)
+
+Other than this bug, my robot is able to fill 3D space completely randomly, has randomly-assigned weights in its functional neural network, and has a class heirarchy which will hillclimbing and parallelization.
 
 ## Relevant Files
-All the files related to this project have the prefix "snake", e.g. "snakeJoint.py". To run the code, please use "snakeMain.py". You can find a teaser for some results on [YouTube](https://youtu.be/iKKsa0DjAUI).
-
-## Ability for Expansion
-Since I modeled my class heirarchy after the Ludobots course (linked above), I have room to expand into evolving this snake via random mutations.
+All the files related to this project have the prefix "horse", e.g. "horseJoint.py". To run the code, please use "horseMain.py". You can find a teaser for some results on [YouTube](https://youtu.be/02n35ynfyms).
