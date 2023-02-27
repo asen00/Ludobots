@@ -31,6 +31,7 @@ class EVOLUTION_TRACKER:
                 fittestMember[seed][gen] = self.fullfitnessArray[seed][gen][np.argmax(self.fullfitnessArray[seed][gen])]
             plt.plot(x, fittestMember[seed], linestyle='-', label='Run:'+str(seed), color=((30+(56*seed))/255, (168+(21*seed))/255, (131+(10*seed))/255))
 
+        plt.xticks(x)
         plt.xlabel("Generation")
         plt.ylabel("Fitness")
         plt.savefig('EvolutionPlot.png', dpi=600)

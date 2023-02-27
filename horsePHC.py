@@ -81,11 +81,12 @@ class HORSE_PHC:
                 self.checkpointParents[gen] = self.parents[np.argmax(popFitnesses)]
                 self.Pickle_Checkpoints(gen)
 
+        self.parents[0].Start_Simulation("GUI")
+        self.parents[np.argmax(popFitnesses)].Start_Simulation("GUI")
+
         '''with open('fitnessForRun'+str(self.seed)+'.pickle', 'wb') as handle:
             pickle.dump(self.fitnessAllGen, handle, protocol=pickle.HIGHEST_PROTOCOL)'''
         return self.fitnessAllGen
-
-        #self.parents[np.argmax(popFitnesses)].Start_Simulation("GUI")
     
     def Pickle_Checkpoints(self, generation):
         with open('checkpoints_seed'+str(self.seed)+'_gen'+str(generation)+'.pickle', 'wb') as handle:
