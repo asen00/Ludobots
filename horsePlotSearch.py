@@ -1,9 +1,18 @@
 from horseSearch import EVOLUTION_TRACKER
-import os
+import random as rd
+import datetime as date
+import constants as c
 
-os.system("rm EvolutionPlot.png")
-os.system("rm fullFitnessArray.npy")
+start = date.datetime.now().strftime("%m-%d-%y_%H:%M:%S")
 
-evo = EVOLUTION_TRACKER(numRuns=5, checkpointGen=2)
+numRuns = 3
+
+evo = EVOLUTION_TRACKER(numRuns=numRuns, checkpointGen=5, timestamp=start)
 evo.Run_Search()
 evo.Plot_Evolution()
+evo.Save_Evolution_of_Fittest(rd.randint(0, numRuns-1))
+
+end = date.datetime.now().strftime("%m-%d-%y_%H:%M:%S")
+
+print("Start time: ", start)
+print("End time: ", end)

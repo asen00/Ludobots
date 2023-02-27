@@ -29,7 +29,7 @@ class SIMULATION:
             self.robot.Think()
             self.robot.Act(self.robot.robotId, timeStep)
 
-            t=1/3000
+            t=1/100
             if self.directOrGUI == "GUI":
                 time.sleep(t)
     

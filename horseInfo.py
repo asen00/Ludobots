@@ -34,7 +34,7 @@ class HORSE_INFO:
         
         return faceIndex, relLinkPos, relJointPos, self.mainSizes
     
-    def Construct_Limb(self, parent, numSubLinks, limbFace, limbDir):        
+    def Construct_Limb(self, parent, numSubLinks, limbFace, limbDir):   
         linkSizes = self.Choose_Limb_Link_Sizes(numSubLinks)
 
         relLinkPos = np.zeros((numSubLinks, 3))
