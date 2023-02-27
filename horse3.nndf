@@ -33,7 +33,7 @@
     <synapse sourceNeuronName = "2" targetNeuronName = "0" weight = "0.6562161096914743" />
     <synapse sourceNeuronName = "2" targetNeuronName = "1" weight = "-0.22189934283719026" />
     <synapse sourceNeuronName = "2" targetNeuronName = "2" weight = "-0.7762513691630444" />
-    <synapse sourceNeuronName = "2" targetNeuronName = "3" weight = "0.10055045584029232" />
+    <synapse sourceNeuronName = "2" targetNeuronName = "3" weight = "0.9924173974595893" />
     <synapse sourceNeuronName = "2" targetNeuronName = "4" weight = "0.5840011623089323" />
     <synapse sourceNeuronName = "2" targetNeuronName = "5" weight = "0.9960369807400344" />
     <synapse sourceNeuronName = "2" targetNeuronName = "6" weight = "0.6717490721164532" />

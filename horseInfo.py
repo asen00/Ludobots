@@ -6,37 +6,21 @@ from snakeJoint import JOINT
 
 class HORSE_INFO:
     def __init__(self, numLinks):
-        self.numLinks = numLinks
         self.links = {}
         self.joints = {}
         self.origin = [0,0,5]
 
-    def Choose_Link_Sizes(self, numLinks):
-        snakeLinkSizes = np.random.uniform(low=0.25, high=0.75, size=(numLinks, 3))
-        return snakeLinkSizes
-
-    def Choose_Propagation_Stream(self, numLinks, direction):
-        linkSizes = self.Choose_Link_Sizes()
-        numJoints = numLinks - 1
-        propAxis = np.random.randin(low=0, high=3, size=numLinks)
-
-        relLinkPos = np.zeros((numLinks, 3))
-        for link in range(1, numLinks):
-            relLinkPos[link][propAxis[link-1]] = direction*linkSizes[link][propAxis[link-1]]/2
-        
-        relJointPos = np.zeros((numJoints, 3))
-        relJointPos[0][propAxis[0]] = direction*linkSizes[0][propAxis[0]]/2
-        for joint in range(1, numJoints):
-            if propAxis[joint] == propAxis[joint-1]: ## no change in axis
-                relJointPos[joint][propAxis[joint]] = direction*linkSizes[joint][propAxis[joint]]
-            else: ## axis changed
-                relJointPos[joint][propAxis[joint-1]] = linkSizes[joint][propAxis[joint-1]]/2
-                relJointPos[joint][propAxis[joint]] = direction*linkSizes[joint][propAxis[joint]]/2
-
-        return propAxis, relLinkPos, relJointPos, linkSizes
+        # FIXING GEOMETRY OF MAIN SNAKE BODY
+        self.numLinks = numLinks
+        self.mainSizes = np.array(np.mat('0.75 0.75 0.75; 0.7 0.7 0.7; 0.65 0.65 0.65'))
+        self.mainFace = 0
+        self.mainDir = 1
+    
+    def Choose_Limb_Link_Sizes(self, numLinks):
+        LinkSizes = np.random.uniform(low=0.25, high=0.75, size=(numLinks, 3))
+        return LinkSizes
 
     def Construct_Main_Body(self, numLinks, faceIndex, direction):
-        self.mainSizes = self.Choose_Link_Sizes(self.numLinks)
         numJoints = numLinks - 1
 
         relLinkPos = np.zeros((numLinks, 3))
@@ -51,7 +35,7 @@ class HORSE_INFO:
         return faceIndex, relLinkPos, relJointPos, self.mainSizes
     
     def Construct_Limb(self, parent, numSubLinks, limbFace, limbDir):        
-        linkSizes = self.Choose_Link_Sizes(numSubLinks)
+        linkSizes = self.Choose_Limb_Link_Sizes(numSubLinks)
 
         relLinkPos = np.zeros((numSubLinks, 3))
         relJointPos = np.zeros((numSubLinks, 3))
@@ -76,14 +60,12 @@ class HORSE_INFO:
         faceOpt = [0,1,2] # corresponding to x, y, or z, respectively
         dirOpt = [-1,1]
 
-        self.mainFace = rd.choice(faceOpt)
-        self.mainDir = rd.choice(dirOpt)
         mainBody = self.Construct_Main_Body(self.numLinks, self.mainFace, self.mainDir)
 
         self.links[0] = LINK(linkName = 0,
                             pos = self.origin, 
                             size = mainBody[3][0], 
-                            sensorYN = rd.randint(0,1))
+                            sensorYN = 1)
         self.joints[0] = JOINT(jointName = "0_1", 
                                parentLink = "0", 
                                childLink = "1",
@@ -95,7 +77,7 @@ class HORSE_INFO:
             self.links[linkIndex] = LINK(linkName = linkIndex, 
                                         pos = mainBody[1][linkIndex],
                                         size = mainBody[3][linkIndex],
-                                        sensorYN = rd.randint(0,1))
+                                        sensorYN = 1)
             if linkIndex < self.numLinks-1:
                 parentLink = str(linkIndex)
                 childLink = str(linkIndex+1)

@@ -10,8 +10,7 @@ class HORSE_SOLUTION:
     def __init__(self, solutionID):
         self.myID = str(solutionID)
 
-        #self.numLinks = 5
-        self.numLinks = rd.randint(1, 5)
+        self.numLinks = 3 #rd.randint(1, 5)
         self.info = HORSE_INFO(self.numLinks)
         self.linksAndjoints = self.info.Get_Joints_and_Links()
         self.links = self.linksAndjoints[0]
@@ -26,7 +25,7 @@ class HORSE_SOLUTION:
         for i in range(self.totalLinks-1):
             self.numMotorNeurons += 1
         self.weights = (2*np.random.rand(self.numSensorNeurons,self.numMotorNeurons))-1
-
+    
     def Set_ID(self, childID):
         self.myID = str(childID)
 
@@ -53,8 +52,8 @@ class HORSE_SOLUTION:
         os.system("rm HORSEfitness"+self.myID+".txt")
 
     def Mutate(self):
-        randomRow = rd.randint(0,self.numSensorNeurons-1)
-        randomColumn = rd.randint(0,self.numMotorNeurons-1)
+        randomRow = rd.randint(0, self.numSensorNeurons-1)
+        randomColumn = rd.randint(0, self.numMotorNeurons-1)
         self.weights[randomRow, randomColumn] = rd.random() * 2 - 1
 
     def Create_World(self):

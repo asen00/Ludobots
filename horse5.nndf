@@ -66,7 +66,7 @@
     <synapse sourceNeuronName = "6" targetNeuronName = "1" weight = "0.7780209813832331" />
     <synapse sourceNeuronName = "6" targetNeuronName = "2" weight = "-0.18648835381839057" />
     <synapse sourceNeuronName = "6" targetNeuronName = "3" weight = "0.7301889090763771" />
-    <synapse sourceNeuronName = "6" targetNeuronName = "4" weight = "0.4604306522209918" />
+    <synapse sourceNeuronName = "6" targetNeuronName = "4" weight = "0.5686294483489509" />
     <synapse sourceNeuronName = "6" targetNeuronName = "5" weight = "0.19300655400633615" />
     <synapse sourceNeuronName = "6" targetNeuronName = "6" weight = "0.6303327745997465" />
     <synapse sourceNeuronName = "6" targetNeuronName = "7" weight = "0.33051354947770606" />
