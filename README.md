@@ -28,9 +28,9 @@ I checkpointed using [Python's pickle module](https://docs.python.org/3/library/
 
 ## Seeing Evolution
 Evolution is tracked using a fitness-vs.-generation graph. For each random seed in the range 1-5, a line is drawn to show the fittest population member in each generation. Below are some examples of plots produced.
-![/Users/AntaraSen_1/Documents/GitHub/ludobots_sen/EvolutionPlot_02-27-23_22:45:34.png]
-![/Users/AntaraSen_1/Documents/GitHub/ludobots_sen/EvolutionPlot_02-27-23_20:05:32.png]
-![/Users/AntaraSen_1/Documents/GitHub/ludobots_sen/EvolutionPlot_02-27-23_17:06:30.png]
+<img width="998" alt="Screen Shot 2023-02-27 at 11 49 32 PM" src="https://user-images.githubusercontent.com/114432525/221765833-f5283964-51cf-4801-8094-d6b6b299ee2d.png">
+<img width="996" alt="Screen Shot 2023-02-27 at 11 49 42 PM" src="https://user-images.githubusercontent.com/114432525/221765861-5a20bd4e-69b2-4f66-ae3f-671566e696e0.png">
+<img width="996" alt="Screen Shot 2023-02-27 at 11 49 53 PM" src="https://user-images.githubusercontent.com/114432525/221765882-a756074e-0891-4f08-ab30-461ba22c660e.png">
 
 However, to actually watch the evolution of a robot, one may use the file "horseMakeGUIvideos.py" to run GUI simulations of the first and last generations of the ending fittest member for any seed they specify. Below is an example of such evolution. This corresponds to the [last graph shown above](https://youtu.be/godZyfXm44s).
 
