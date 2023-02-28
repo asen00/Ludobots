@@ -15,4 +15,4 @@ evo.Save_Evolution_of_Fittest()
 end = date.datetime.now().strftime("%m-%d-%y_%H:%M:%S")
 
 print("Start time: ", start)
-print("End time: ", end)  
+print("End time: ", end)
