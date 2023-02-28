@@ -4,17 +4,36 @@
 Created using [Ludobots course](https://www.reddit.com/r/ludobots/wiki/installation/).
 
 ## About the Assignment
-This is a fully random robot, i.e., the number of links it has, their sizes, and their ability to sense their surroundings are generated using the [numpy.random.random()](https://numpy.org/doc/stable/reference/random/generated/numpy.random.random.html) and [random.randint()](https://www.w3schools.com/python/ref_random_randint.asp) functions. 
+This robot has been evolved in such a way that its morphology mutates alongside its neural network. This is achieved using the following logic.
+IMAGE
 
 For reference, links with sensors are colored green, those without are blue, and there is a blue world element present.
 
 ## How It Was Made
-I used object classes to store information about each link and then passed these attributes to [pyrosim](https://github.com/jbongard/pyrosim), which then called [pybullet](https://pybullet.org/wordpress/) functions.
+The root robot is a chain of 5 sensors, all joined together along the x-axis using 'revolute' joints. Then, each link in the main body is given a random choice to either spawn a limb or not. If a limb is to be spawned, the number of sub-limbs, or "phalanges," is randomly chosen in the range 1-4. The limb may only propagate along the y- or z-axes, but can form in just one or both (positive and negative) directions along its chosen axis.
 
-To mitigate self-collisions, the method horseInfo.Constuct_Limb() was supposed to sprout limbs in a continuous fashion in the direction of limb growth. However, I think there is a tiny bug here which is making my joints form from within the previous link. It is also causing certain links to be spaced out more than they should be. I really have no idea if the bug is in my code or my logic. (I have tried debugging this one method for 4 hours and am not sure how to proceed.) Below is an image of the logic I was trying to follow.
-![IMG_0338](https://user-images.githubusercontent.com/114432525/220254009-0c9f87d3-f952-491c-b759-99d3a98829f8.PNG)
+Also mutated during evolution are the sensing capabilities of each phalange, the axis of each revolving phalange joint, and the synaptic structure and weights of all the neurons.
 
-Other than this bug, my robot is able to fill 3D space completely randomly, has randomly-assigned weights in its functional neural network, and has a class heirarchy which will hillclimbing and parallelization.
+The robot was trained to move in a straight line.
 
-## Relevant Files
-All the files related to this project have the prefix "horse", e.g. "horseJoint.py". To run the code, please use "horseMain.py". You can find a teaser for some results on [YouTube](https://youtu.be/02n35ynfyms).
+### New Skills Learned
+1) [Random seed](https://www.analyticsvidhya.com/blog/2021/12/what-does-numpy-random-seed-do/)
+In order to make the work reproducible, runs were indexed using random seeds 0-4. This means that if the code is rerun for a specific seed, it should produce the same solution since all random mutations will be re-picked in the same pseudorandom sequence.
+
+2) [Checkpointing](https://legacy.docs.greatexpectations.io/en/stable/guides/how_to_guides/validation/how_to_run_a_checkpoint_in_python.html)
+Since this program now needs to run for much longer timescales, checkpointing helped me store my place in the algorithm so that if the code crashed or needed to be stopped, the program could resume where it left off.
+
+3) [Pickling](https://www.geeksforgeeks.org/understanding-python-pickling-example/)
+I checkpointed using [Python's pickle module](https://docs.python.org/3/library/pickle.html).
+
+## Seeing Evolution
+Evolution is tracked using a fitness-vs.-generation graph. For each random seed in the range 1-5, a line is drawn to show the fittest population member in each generation. Below are some examples of plots produced.
+PLOT 1
+PLOT 2
+PLOT 3
+
+However, to actually watch the evolution of a robot, one may use the file "horseMakeGUIvideos.py" to run GUI simulations of the first and last generations of the ending fittest member for any seed they specify. Below is an example of such evolution. This corresponds to the first graph shown above.
+VIDEO 1 (YouTube link)
+
+## Bugs
+There is still one bugs remaining. The Construct_Limb() method in the HORSE_INFO class is still making my limbs grow into each other, and sometimes disjointed. This is affecting the way that the fitness is being written, and thus the robots are sometimes great at forward locomotion, and other times just move in circles.
