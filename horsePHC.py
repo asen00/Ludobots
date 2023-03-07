@@ -1,6 +1,7 @@
 from horse import HORSE_SOLUTION
 import constants as c
 import numpy as np
+import random as rd
 import copy
 import os
 import pickle
@@ -13,6 +14,7 @@ class HORSE_PHC:
         
         self.seed = randomseed
         np.random.seed(randomseed)
+        rd.seed(randomseed)
 
         self.timestamp = timestamp
 

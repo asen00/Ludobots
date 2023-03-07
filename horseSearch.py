@@ -44,15 +44,8 @@ class EVOLUTION_TRACKER:
         plt.show()
     
     def Save_Evolution_of_Fittest(self):
-        print("YOU GOT HERE")
-        ## Items in list are population member indices for a select generation for a select seed
         endFittestMemberINDEX = np.zeros(self.numRuns, dtype=int)
-        #startLoserMemberINDEX = np.zeros(self.numRuns, dtype=int)
-
         for seed in range(self.numRuns):
             endFittestMemberINDEX[seed] = np.argmax(self.fullfitnessArray[seed][c.numberofGenerations-1])
-            print(self.fullfitnessArray[seed][c.numberofGenerations-1])
-            print(np.argmax(self.fullfitnessArray[seed][c.numberofGenerations-1]))
-            #startLoserMemberINDEX[seed] = np.argmin(self.fittestMember[seed][0])
         
-        np.save('Outputs/IDforGUIvidoes_'+self.timestamp+'.npy', endFittestMemberINDEX) #np.array([endFittestMemberINDEX, startLoserMemberINDEX]))
+        np.save('Outputs/IDforGUIvidoes_'+self.timestamp+'.npy', endFittestMemberINDEX)

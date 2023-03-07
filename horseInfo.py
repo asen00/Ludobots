@@ -12,7 +12,7 @@ class HORSE_INFO:
 
         # FIXING GEOMETRY OF MAIN SNAKE BODY
         self.numLinks = numLinks
-        self.mainSizes = np.array(np.mat('0.75 0.75 0.75; 0.7 0.7 0.7; 0.65 0.65 0.65'))
+        self.mainSizes = np.random.uniform(low=0.75, high=0.75, size=(self.numLinks, 3))
         self.mainFace = 0
         self.mainDir = 1
     
@@ -95,7 +95,7 @@ class HORSE_INFO:
         limbYN = np.random.randint(low=0, high=3, size=self.numLinks)
         for parent in range(self.numLinks):
             if limbYN[parent] == 1: ## limb grown from only one direction on random axis
-                numSubLimbs = rd.randint(1, 5)
+                numSubLimbs = rd.randint(1, 3)
                 #numSubLimbs = 3
                 limbStructure = self.Construct_Limb(parent, numSubLimbs, rd.choice(faceOpt), rd.choice(dirOpt))
                 for subLimb in range(numSubLimbs):
@@ -114,8 +114,8 @@ class HORSE_INFO:
                     self.totalLinkTally += 1
             elif limbYN[parent] == 2: ## limb grown from both directions on random axis
                 face = rd.choice(faceOpt)
-                numSubLimbsPos = rd.randint(1, 5)
-                numSubLimbsNeg = rd.randint(1, 5)
+                numSubLimbsPos = rd.randint(1, 3)
+                numSubLimbsNeg = rd.randint(1, 3)
                 limbStrPos = self.Construct_Limb(parent, numSubLimbsPos, face, 1)
                 limbStrNeg = self.Construct_Limb(parent, numSubLimbsNeg, face, -1)
                 for subLimb in range(numSubLimbsPos):
