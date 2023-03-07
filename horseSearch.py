@@ -7,7 +7,7 @@ import os
 
 class EVOLUTION_TRACKER:
     def __init__(self, numRuns, checkpointGen, timestamp):
-        os.system("rm checkpoint*.pickle")
+        os.system("rm Checkpoints/checkpoint*.pickle")
 
         self.numRuns = numRuns
         self.checkpointGen = checkpointGen
@@ -21,7 +21,7 @@ class EVOLUTION_TRACKER:
             self.phc[seed].Evolve_and_Save_Fitness_and_Checkpoint(self.checkpointGen)
             self.fullfitnessArray[seed] = self.phc[seed].fitnessAllGen
         
-        np.save('fullfitnessArray_'+self.timestamp+'.npy', self.fullfitnessArray)
+        np.save('Outputs/fullfitnessArray_'+self.timestamp+'.npy', self.fullfitnessArray)
     
     def Plot_Evolution(self):
         x = np.arange(c.numberofGenerations)
@@ -31,26 +31,28 @@ class EVOLUTION_TRACKER:
         color_dict = {0:'#E61717', 1:'#E69317', 2:'#56BF52', 3:'#5EC1F2', 4:'#9B43D1'}
 
         for seed in range(self.numRuns):
-            plt.plot(x, self.fullfitnessArray[seed], linestyle='', marker="o", color=color_dict[seed], markersize=0.3)
+            plt.plot(x, self.fullfitnessArray[seed], linestyle='', marker="o", color=color_dict[seed], markersize=2)
             for gen in range(c.numberofGenerations):
                 self.fittestMember[seed][gen] = self.fullfitnessArray[seed][gen][np.argmax(self.fullfitnessArray[seed][gen])]
             plt.plot(x, self.fittestMember[seed], linestyle='-', label='Run:'+str(seed), color=color_dict[seed])
 
-        plt.xticks(x) 
+        plt.xticks(np.arange(0, c.numberofGenerations, c.numberofGenerations/10))
         plt.xlabel("Generation")
         plt.ylabel("Fitness")
         plt.legend()
-        plt.savefig('EvolutionPlot_'+self.timestamp+'.png', dpi=600)
+        plt.savefig('Outputs/EvolutionPlot_'+self.timestamp+'.png', dpi=600)
         plt.show()
     
     def Save_Evolution_of_Fittest(self):
-        endFittestMemberID = np.zeros(self.numRuns, dtype=int)
-        gen0PopMemberID = np.zeros(self.numRuns, dtype=int)
-        genLASTPopMemberID = np.zeros(self.numRuns, dtype=int)
+        print("YOU GOT HERE")
+        ## Items in list are population member indices for a select generation for a select seed
+        endFittestMemberINDEX = np.zeros(self.numRuns, dtype=int)
+        #startLoserMemberINDEX = np.zeros(self.numRuns, dtype=int)
 
         for seed in range(self.numRuns):
-            endFittestMemberID[seed] = np.argmax(self.fittestMember[seed][c.numberofGenerations-1])
-            gen0PopMemberID[seed] = self.phc[seed].Unpickle_Checkpoints(0)[endFittestMemberID[seed]].myID
-            genLASTPopMemberID[seed] = self.phc[seed].Unpickle_Checkpoints(c.numberofGenerations-1)[endFittestMemberID[seed]].myID
+            endFittestMemberINDEX[seed] = np.argmax(self.fullfitnessArray[seed][c.numberofGenerations-1])
+            print(self.fullfitnessArray[seed][c.numberofGenerations-1])
+            print(np.argmax(self.fullfitnessArray[seed][c.numberofGenerations-1]))
+            #startLoserMemberINDEX[seed] = np.argmin(self.fittestMember[seed][0])
         
-        np.save('IDforGUIvidoes_'+self.timestamp+'.npy', np.array([gen0PopMemberID, genLASTPopMemberID]))
+        np.save('Outputs/IDforGUIvidoes_'+self.timestamp+'.npy', endFittestMemberINDEX) #np.array([endFittestMemberINDEX, startLoserMemberINDEX]))

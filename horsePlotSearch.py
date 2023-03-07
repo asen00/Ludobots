@@ -1,11 +1,9 @@
 from horseSearch import EVOLUTION_TRACKER
-import random as rd
 import datetime as date
-import constants as c
 
 start = date.datetime.now().strftime("%m-%d-%y_%H:%M:%S")
 
-numRuns = 5
+numRuns = 3
 
 evo = EVOLUTION_TRACKER(numRuns=numRuns, checkpointGen=5, timestamp=start)
 evo.Run_Search()

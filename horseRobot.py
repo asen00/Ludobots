@@ -17,15 +17,16 @@ class ROBOT:
         
         self.myID = str(solutionID)
         
-        self.robotId = p.loadURDF("horse"+self.myID+".urdf")
+        self.robotId = p.loadURDF("miscStorage/horse"+self.myID+".urdf")
         pyrosim.Prepare_To_Simulate(self.robotId)
 
-        self.nn = NEURAL_NETWORK("horse"+self.myID+".nndf")
+        self.nn = NEURAL_NETWORK("miscStorage/horse"+self.myID+".nndf")
         
         self.Prepare_To_Sense()
         self.Prepare_To_Act()
 
-        os.system(f"rm brain{solutionID}.nndf")
+        os.system(f"rm miscStorage/horse{solutionID}.nndf")
+        os.system(f"rm miscStorage/horse{solutionID}.urdf")
     
     def Prepare_To_Sense(self):
         for linkName in pyrosim.linkNamesToIndices:
@@ -54,7 +55,7 @@ class ROBOT:
         stateOfLinkZero = p.getLinkState(self.robotId, 0)
         positionOfLinkZero = stateOfLinkZero[0]
         xCoordinateOfLinkZero = positionOfLinkZero[0]
-        f = open("tmp"+self.myID+".txt", "w")
+        f = open("miscStorage/tmp"+self.myID+".txt", "w")
         f.write(str(xCoordinateOfLinkZero))
         f.close()
-        os.system("mv tmp"+self.myID+".txt HORSEfitness"+self.myID+".txt")
+        os.system("mv miscStorage/tmp"+self.myID+".txt miscStorage/HORSEfitness"+self.myID+".txt")

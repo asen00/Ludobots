@@ -40,5 +40,4 @@ class SIMULATION:
         # Uncomment if you want to save sensor/motor values
         #self.robot.sensors.Save_Values()
         #self.robot.motors.Save_Values()
-
         p.disconnect()

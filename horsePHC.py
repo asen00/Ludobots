@@ -4,13 +4,12 @@ import numpy as np
 import copy
 import os
 import pickle
-import time
 
 class HORSE_PHC:
-    def __init__(self, randomseed, timestamp):
-        os.system("rm horse*.nndf")
-        os.system("rm horse*.urdf")
-        os.system("rm HORSEfitness*.txt")
+    def __init__(self, randomseed, timestamp):        
+        os.system("rm miscStorage/horse*.nndf")
+        os.system("rm miscStorage/horse*.urdf")
+        os.system("rm miscStorage/HORSEfitness*.txt")
         
         self.seed = randomseed
         np.random.seed(randomseed)
@@ -46,7 +45,7 @@ class HORSE_PHC:
         self.Spawn()
         self.Mutate()
         self.Evaluate(self.children)
-        #self.Print()
+        self.Print()
         self.Select()
 
     def Spawn(self):
@@ -82,15 +81,10 @@ class HORSE_PHC:
             popFitnessForGen[popMember] = self.parents[popMember].fitness
         return popFitnessForGen
 
-    def Show_Evolution(self, popMemberID):
-        ## For a specified population member, start GUI simulation of first and last generation
-        self.parents[0].Start_Simulation("GUI")
-        pass
-
     def Pickle_Checkpoints(self, generation):
-        with open('checkpoint_'+self.timestamp+'_seed'+str(self.seed)+'_gen'+str(generation)+'.pickle', 'wb') as handle:
+        with open('Checkpoints/checkpoint_'+self.timestamp+'_seed'+str(self.seed)+'_gen'+str(generation)+'.pickle', 'wb') as handle:
             pickle.dump(self.checkpointParents[generation], handle, protocol=pickle.HIGHEST_PROTOCOL)
 
     def Unpickle_Checkpoints(self, generation):
-        with open('checkpoint_'+self.timestamp+'_seed'+str(self.seed)+'_gen'+str(generation)+'.pickle', 'rb') as handle:
+        with open('Checkpoints/checkpoint_'+self.timestamp+'_seed'+str(self.seed)+'_gen'+str(generation)+'.pickle', 'rb') as handle:
             return pickle.load(handle)

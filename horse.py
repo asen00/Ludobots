@@ -35,13 +35,13 @@ class HORSE_SOLUTION:
         os.system("/Users/AntaraSen_1/opt/anaconda3/bin/python horseSimulate.py " + " " + directOrGUI + " " + self.myID + " 2>&1 &")
     
     def Wait_For_Simulation_To_End(self):
-        while not os.path.exists("HORSEfitness"+self.myID+".txt"):
+        while not os.path.exists("miscStorage/HORSEfitness"+self.myID+".txt"):
             time.sleep(0.01)
         
         success = False
         while not success:
             try:
-                fitnessFile = open("HORSEfitness"+self.myID+".txt", "r")
+                fitnessFile = open("miscStorage/HORSEfitness"+self.myID+".txt", "r")
                 self.fitness = float(fitnessFile.read())
                 #print(self.fitness)
                 fitnessFile.close()
@@ -49,7 +49,7 @@ class HORSE_SOLUTION:
             except:
                 time.sleep(0.01)
         
-        os.system("rm HORSEfitness"+self.myID+".txt")
+        os.system("rm miscStorage/HORSEfitness"+self.myID+".txt")
 
     def Mutate(self):
         randomRow = rd.randint(0, self.numSensorNeurons-1)
@@ -62,7 +62,7 @@ class HORSE_SOLUTION:
         pyrosim.End()
 
     def Generate_Body(self):
-        pyrosim.Start_URDF("horse"+str(self.myID)+".urdf")
+        pyrosim.Start_URDF("miscStorage/horse"+str(self.myID)+".urdf")
         
         for i in range(self.totalLinks):
             pyrosim.Send_Cube(name = str(i), pos = self.links[i].pos, size = self.links[i].size, sensorYN=self.links[i].sensorYN)
@@ -77,7 +77,7 @@ class HORSE_SOLUTION:
         pyrosim.End()
 
     def Generate_Brain(self):
-        pyrosim.Start_NeuralNetwork("horse"+str(self.myID)+".nndf")
+        pyrosim.Start_NeuralNetwork("miscStorage/horse"+str(self.myID)+".nndf")
         
         sensorCount = 0
         for i in range(self.totalLinks):
