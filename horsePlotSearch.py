@@ -3,7 +3,7 @@ import datetime as date
 
 start = date.datetime.now().strftime("%m-%d-%y_%H:%M:%S")
 
-numRuns = 10
+numRuns = 1
 
 evo = EVOLUTION_TRACKER(numRuns=numRuns, checkpointGen=10, timestamp=start)
 evo.Run_Search()

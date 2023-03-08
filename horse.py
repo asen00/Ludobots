@@ -10,7 +10,7 @@ class HORSE_SOLUTION:
     def __init__(self, solutionID):
         self.myID = str(solutionID)
 
-        self.numLinks = 1
+        self.numLinks = rd.randint(1,5)
         self.info = HORSE_INFO(self.numLinks)
         self.linksAndjoints = self.info.Get_Joints_and_Links()
         self.links = self.linksAndjoints[0]

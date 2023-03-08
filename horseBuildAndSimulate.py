@@ -19,9 +19,6 @@ def Unpickle(timestamp, seed, generation):
 gen0popForSeed = Unpickle(timestamp, seed, 0)
 genLASTpopForSeed = Unpickle(timestamp, seed, c.numberofGenerations-1)
 
-print(gen0popForSeed)
-print(genLASTpopForSeed)
-
 gen0popForSeed[indexToShow].Generate_Body()
 gen0popForSeed[indexToShow].Generate_Brain()
 

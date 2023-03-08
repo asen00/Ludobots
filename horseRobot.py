@@ -17,7 +17,8 @@ class ROBOT:
         
         self.myID = str(solutionID)
         
-        self.robotId = p.loadURDF("miscStorage/horse"+self.myID+".urdf")
+        self.robotId = p.loadURDF("miscStorage/horse"+self.myID+".urdf", flags=p.URDF_USE_SELF_COLLISION|p.URDF_USE_SELF_COLLISION_INCLUDE_PARENT)
+        ## If you turn off self-collisions, then you need to make the limbs propagate in a single direction. Ask Sam what he means by space-filling.
         pyrosim.Prepare_To_Simulate(self.robotId)
 
         self.nn = NEURAL_NETWORK("miscStorage/horse"+self.myID+".nndf")
