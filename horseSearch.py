@@ -28,7 +28,7 @@ class EVOLUTION_TRACKER:
         
         self.fittestMember = np.zeros((self.numRuns, c.numberofGenerations))
         
-        color_dict = {0:'#E61717', 1:'#E69317', 2:'#56BF52', 3:'#5EC1F2', 4:'#9B43D1'}
+        color_dict = {0:'#EB4034', 1:'#EB9B34', 2:'#EBE01E', 3:'#7FD141', 4:'#2AD1D4', 5:'#1109ED', 6:'#9693F5', 7:'#C479F2', 8:'#D42AC0', 9:'#F2798F'}
 
         for seed in range(self.numRuns):
             plt.plot(x, self.fullfitnessArray[seed], linestyle='', marker="o", color=color_dict[seed], markersize=2)
