@@ -34,7 +34,7 @@ class HORSE_INFO:
         
         return faceIndex, relLinkPos, relJointPos, self.mainSizes
     
-    def Construct_Limb(self, parent, numSubLinks, limbFace, limbDir):   
+    def Construct_Limb(self, parent, numSubLinks, limbFace, limbDir): 
         linkSizes = self.Choose_Limb_Link_Sizes(numSubLinks)
 
         relLinkPos = np.zeros((numSubLinks, 3))
@@ -44,6 +44,7 @@ class HORSE_INFO:
             relJointPos[0] = self.origin
             relJointPos[0][limbFace] = self.origin[limbFace] + (limbDir * self.mainSizes[0][limbFace]/2)
             relLinkPos[0][limbFace] = limbDir*linkSizes[0][limbFace]/2
+        
         else:
             relJointPos[0][self.mainFace] = self.mainDir * self.mainSizes[parent][self.mainFace]/2
             relJointPos[0][limbFace] = limbDir * self.mainSizes[parent][limbFace]/2
@@ -54,6 +55,9 @@ class HORSE_INFO:
             relJointPos[subLimb][limbFace] = limbDir * linkSizes[subLimb-1][limbFace]
             relLinkPos[subLimb][limbFace] = limbDir * linkSizes[subLimb][limbFace]/2
 
+        print("Joint pos:", relJointPos)
+        print("Link pos:", relLinkPos)
+        print("Link size:", linkSizes)
         return limbFace, relLinkPos, relJointPos, linkSizes
 
     def Get_Joints_and_Links(self):
@@ -91,26 +95,39 @@ class HORSE_INFO:
         
         faceOpt.remove(self.mainFace)
         self.totalLinkTally = self.numLinks
-        #limbYN = [0,1,1,0,0]
         limbYN = np.random.randint(low=0, high=3, size=self.numLinks)
         for parent in range(self.numLinks):
             if limbYN[parent] == 1: ## limb grown from only one direction on random axis
                 numSubLimbs = rd.randint(1, 3)
-                #numSubLimbs = 3
                 limbStructure = self.Construct_Limb(parent, numSubLimbs, rd.choice(faceOpt), rd.choice(dirOpt))
                 for subLimb in range(numSubLimbs):
-                    childLink = str(self.totalLinkTally)
-                    jointName = str(parent)+"_"+childLink
-                    self.joints[self.totalLinkTally-1] = JOINT(jointName = jointName, 
-                                                                parentLink = str(parent),
-                                                                childLink = childLink,
-                                                                jointType = "revolute",
-                                                                jointPos = limbStructure[2][subLimb],
-                                                                jointAxis = self.Get_Joint_Axis(limbStructure[0], rd.randint(0, 1)))
-                    self.links[self.totalLinkTally] = LINK(linkName = self.totalLinkTally,
-                                                        pos = limbStructure[1][subLimb],
-                                                        size = limbStructure[3][subLimb],
-                                                        sensorYN = rd.randint(0,1))
+                    if subLimb == 0:
+                        childLink = str(self.totalLinkTally)
+                        jointName = str(parent)+"_"+childLink
+                        self.joints[self.totalLinkTally-1] = JOINT(jointName = jointName, 
+                                                                    parentLink = str(parent),
+                                                                    childLink = childLink,
+                                                                    jointType = "revolute",
+                                                                    jointPos = limbStructure[2][subLimb],
+                                                                    jointAxis = self.Get_Joint_Axis(limbStructure[0], rd.randint(0, 1)))
+                        self.links[self.totalLinkTally] = LINK(linkName = self.totalLinkTally,
+                                                            pos = limbStructure[1][subLimb],
+                                                            size = limbStructure[3][subLimb],
+                                                            sensorYN = rd.randint(0,1))
+                    else:
+                        parentLink = str(self.totalLinkTally-1)
+                        childLink = str(self.totalLinkTally)
+                        jointName = parentLink+"_"+childLink
+                        self.joints[self.totalLinkTally-1] = JOINT(jointName = jointName, 
+                                                                    parentLink = parentLink,
+                                                                    childLink = childLink,
+                                                                    jointType = "revolute",
+                                                                    jointPos = limbStructure[2][subLimb],
+                                                                    jointAxis = self.Get_Joint_Axis(limbStructure[0], rd.randint(0, 1)))
+                        self.links[self.totalLinkTally] = LINK(linkName = self.totalLinkTally,
+                                                            pos = limbStructure[1][subLimb],
+                                                            size = limbStructure[3][subLimb],
+                                                            sensorYN = rd.randint(0,1))
                     self.totalLinkTally += 1
             elif limbYN[parent] == 2: ## limb grown from both directions on random axis
                 face = rd.choice(faceOpt)
@@ -119,32 +136,62 @@ class HORSE_INFO:
                 limbStrPos = self.Construct_Limb(parent, numSubLimbsPos, face, 1)
                 limbStrNeg = self.Construct_Limb(parent, numSubLimbsNeg, face, -1)
                 for subLimb in range(numSubLimbsPos):
-                    childLink = str(self.totalLinkTally)
-                    jointName = str(parent)+"_"+childLink
-                    self.joints[self.totalLinkTally-1] = JOINT(jointName = jointName, 
-                                                                parentLink = str(parent),
-                                                                childLink = childLink,
-                                                                jointType = "revolute",
-                                                                jointPos = limbStrPos[2][subLimb],
-                                                                jointAxis = self.Get_Joint_Axis(limbStrPos[0], rd.randint(0, 1)))
-                    self.links[self.totalLinkTally] = LINK(linkName = self.totalLinkTally,
-                                                        pos = limbStrPos[1][subLimb],
-                                                        size = limbStrPos[3][subLimb],
-                                                        sensorYN = rd.randint(0,1))
+                    if subLimb == 0:
+                        childLink = str(self.totalLinkTally)
+                        jointName = str(parent)+"_"+childLink
+                        self.joints[self.totalLinkTally-1] = JOINT(jointName = jointName, 
+                                                                    parentLink = str(parent),
+                                                                    childLink = childLink,
+                                                                    jointType = "revolute",
+                                                                    jointPos = limbStrPos[2][subLimb],
+                                                                    jointAxis = self.Get_Joint_Axis(limbStrPos[0], rd.randint(0, 1)))
+                        self.links[self.totalLinkTally] = LINK(linkName = self.totalLinkTally,
+                                                            pos = limbStrPos[1][subLimb],
+                                                            size = limbStrPos[3][subLimb],
+                                                            sensorYN = rd.randint(0,1))
+                    else:
+                        parentLink = str(self.totalLinkTally-1)
+                        childLink = str(self.totalLinkTally)
+                        jointName = parentLink+"_"+childLink
+                        self.joints[self.totalLinkTally-1] = JOINT(jointName = jointName, 
+                                                                    parentLink = parentLink,
+                                                                    childLink = childLink,
+                                                                    jointType = "revolute",
+                                                                    jointPos = limbStrPos[2][subLimb],
+                                                                    jointAxis = self.Get_Joint_Axis(limbStrPos[0], rd.randint(0, 1)))
+                        self.links[self.totalLinkTally] = LINK(linkName = self.totalLinkTally,
+                                                            pos = limbStrPos[1][subLimb],
+                                                            size = limbStrPos[3][subLimb],
+                                                            sensorYN = rd.randint(0,1))
                     self.totalLinkTally += 1
                 for subLimb in range(numSubLimbsNeg):
-                    childLink = str(self.totalLinkTally)
-                    jointName = str(parent)+"_"+childLink
-                    self.joints[self.totalLinkTally-1] = JOINT(jointName = jointName, 
-                                                                parentLink = str(parent),
-                                                                childLink = childLink,
-                                                                jointType = "revolute",
-                                                                jointPos = limbStrNeg[2][subLimb],
-                                                                jointAxis = self.Get_Joint_Axis(limbStrNeg[0], rd.randint(0, 1)))
-                    self.links[self.totalLinkTally] = LINK(linkName = self.totalLinkTally,
-                                                        pos = limbStrNeg[1][subLimb],
-                                                        size = limbStrNeg[3][subLimb],
-                                                        sensorYN = rd.randint(0,1))
+                    if subLimb == 0:
+                        childLink = str(self.totalLinkTally)
+                        jointName = str(parent)+"_"+childLink
+                        self.joints[self.totalLinkTally-1] = JOINT(jointName = jointName, 
+                                                                    parentLink = str(parent),
+                                                                    childLink = childLink,
+                                                                    jointType = "revolute",
+                                                                    jointPos = limbStrNeg[2][subLimb],
+                                                                    jointAxis = self.Get_Joint_Axis(limbStrNeg[0], rd.randint(0, 1)))
+                        self.links[self.totalLinkTally] = LINK(linkName = self.totalLinkTally,
+                                                            pos = limbStrNeg[1][subLimb],
+                                                            size = limbStrNeg[3][subLimb],
+                                                            sensorYN = rd.randint(0,1))
+                    else:
+                        parentLink = str(self.totalLinkTally-1)
+                        childLink = str(self.totalLinkTally)
+                        jointName = parentLink+"_"+childLink
+                        self.joints[self.totalLinkTally-1] = JOINT(jointName = jointName, 
+                                                                    parentLink = parentLink,
+                                                                    childLink = childLink,
+                                                                    jointType = "revolute",
+                                                                    jointPos = limbStrNeg[2][subLimb],
+                                                                    jointAxis = self.Get_Joint_Axis(limbStrNeg[0], rd.randint(0, 1)))
+                        self.links[self.totalLinkTally] = LINK(linkName = self.totalLinkTally,
+                                                            pos = limbStrNeg[1][subLimb],
+                                                            size = limbStrNeg[3][subLimb],
+                                                            sensorYN = rd.randint(0,1))
                     self.totalLinkTally += 1
 
         return self.links, self.joints, self.totalLinkTally
