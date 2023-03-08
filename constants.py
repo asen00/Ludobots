@@ -8,7 +8,7 @@ num = 10000000
 populationSize = 1
 
 ## Number of generations
-numberofGenerations = 4
+numberofGenerations = 1
 
 ## Number of neurons
 numSensorNeurons = 3

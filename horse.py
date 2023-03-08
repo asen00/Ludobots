@@ -7,9 +7,8 @@ from horseInfo_copy import HORSE_INFO
 
 class HORSE:
     def __init__(self, origin):
-        self.numLinks = 3
-        #self.numLinks = rd.randint(1, 5)
-        self.info = HORSE_INFO(self.numLinks, origin)
+        self.numLinks = rd.randint(1, 5)
+        self.info = HORSE_INFO(self.numLinks)
         self.linksAndjoints = self.info.Get_Joints_and_Links()
         self.links = self.linksAndjoints[0]
         self.joints = self.linksAndjoints[1]
