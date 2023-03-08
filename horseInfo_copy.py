@@ -212,8 +212,21 @@ class HORSE_INFO:
                                                             size = limbStrNeg[2][subLimb],
                                                             sensorYN = rd.randint(0,1))
                     self.totalLinkTally += 1
-
+        
+        #self.Change_Min_Height()
+        
         return self.links, self.joints, self.totalLinkTally
+    
+    def Change_Min_Height(self):
+        zPos = np.zeros(self.totalLinkTally, dtype=float)
+        for link in range(self.totalLinkTally):
+            zPos[link] = self.links[link].pos[2]-(self.links[link].size[2]/2)
+        self.minZpos = np.min(zPos)
+
+        self.links[0].pos[2] -= (-np.abs(self.minZpos))
+        for joint in self.joints:
+            if self.joints[joint].parentLink == 0:
+                self.joints[joint].pos[2] -= (-np.abs(self.minZpos))
     
     def Get_Joint_Axis(self, propAxis, randBit):
         if propAxis == 0:
