@@ -58,7 +58,7 @@ class HORSE_SOLUTION:
 
     def Create_World(self):
         pyrosim.Start_SDF("world.sdf")
-        pyrosim.Send_Cube(name="Box", pos=[5,-3,0] , size=[10,1,0.25])
+        pyrosim.Send_Cube(name="Box", pos=[5,-3,0] , size=[1,1,1])
         pyrosim.End()
 
     def Generate_Body(self):

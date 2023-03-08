@@ -5,7 +5,7 @@ import random as rd
 num = 5000
 
 ## Number of hillclimbers
-populationSize = 10
+populationSize = 5
 
 ## Number of generations
 numberofGenerations = 1

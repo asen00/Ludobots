@@ -55,43 +55,46 @@ class HORSE_INFO:
             relJointPos[subLimb][limbFace] = limbDir * linkSizes[subLimb-1][limbFace]
             relLinkPos[subLimb][limbFace] = limbDir * linkSizes[subLimb][limbFace]/2
 
-        print("Joint pos:", relJointPos)
-        print("Link pos:", relLinkPos)
-        print("Link size:", linkSizes)
         return limbFace, relLinkPos, relJointPos, linkSizes
 
     def Get_Joints_and_Links(self):
         faceOpt = [0,1,2] # corresponding to x, y, or z, respectively
         dirOpt = [-1,1]
 
-        mainBody = self.Construct_Main_Body(self.numLinks, self.mainFace, self.mainDir)
+        if self.numLinks > 1:
+            mainBody = self.Construct_Main_Body(self.numLinks, self.mainFace, self.mainDir)
 
-        self.links[0] = LINK(linkName = 0,
-                            pos = self.origin, 
-                            size = mainBody[3][0], 
-                            sensorYN = 1)
-        self.joints[0] = JOINT(jointName = "0_1", 
-                               parentLink = "0", 
-                               childLink = "1",
-                               jointType = "revolute",
-                               jointPos = self.origin + mainBody[2][0],
-                               jointAxis = self.Get_Joint_Axis(mainBody[0], rd.randint(0,1)))
+            self.links[0] = LINK(linkName = 0,
+                                pos = self.origin, 
+                                size = mainBody[3][0], 
+                                sensorYN = 1)
+            self.joints[0] = JOINT(jointName = "0_1", 
+                                parentLink = "0", 
+                                childLink = "1",
+                                jointType = "revolute",
+                                jointPos = self.origin + mainBody[2][0],
+                                jointAxis = self.Get_Joint_Axis(mainBody[0], rd.randint(0,1)))
 
-        for linkIndex in range(1, self.numLinks):
-            self.links[linkIndex] = LINK(linkName = linkIndex, 
-                                        pos = mainBody[1][linkIndex],
-                                        size = mainBody[3][linkIndex],
-                                        sensorYN = 1)
-            if linkIndex < self.numLinks-1:
-                parentLink = str(linkIndex)
-                childLink = str(linkIndex+1)
-                jointName = parentLink+"_"+childLink
-                self.joints[linkIndex] = JOINT(jointName = jointName, 
-                                                parentLink = parentLink, 
-                                                childLink = childLink,
-                                                jointType = "revolute",
-                                                jointPos = mainBody[2][linkIndex],
-                                                jointAxis = self.Get_Joint_Axis(mainBody[0], rd.randint(0, 1)))
+            for linkIndex in range(1, self.numLinks):
+                self.links[linkIndex] = LINK(linkName = linkIndex, 
+                                            pos = mainBody[1][linkIndex],
+                                            size = mainBody[3][linkIndex],
+                                            sensorYN = 1)
+                if linkIndex < self.numLinks-1:
+                    parentLink = str(linkIndex)
+                    childLink = str(linkIndex+1)
+                    jointName = parentLink+"_"+childLink
+                    self.joints[linkIndex] = JOINT(jointName = jointName, 
+                                                    parentLink = parentLink, 
+                                                    childLink = childLink,
+                                                    jointType = "revolute",
+                                                    jointPos = mainBody[2][linkIndex],
+                                                    jointAxis = self.Get_Joint_Axis(mainBody[0], rd.randint(0, 1)))
+        else:
+            self.links[0] = LINK(linkName = 0,
+                                pos = self.origin, 
+                                size = np.random.uniform(low=0.75, high=0.75, size=3), 
+                                sensorYN = 1)
         
         faceOpt.remove(self.mainFace)
         self.totalLinkTally = self.numLinks
