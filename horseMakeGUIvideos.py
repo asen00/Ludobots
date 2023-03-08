@@ -3,7 +3,7 @@ import numpy as np
 import time
 import constants as c
 
-timestamp = '03-08-23_10:28:15'
+timestamp = '03-08-23_17:34:57'
 run = 0
 IDsForGUIvideos = np.load('Outputs/IDforGUIvidoes_'+timestamp+'.npy')
 

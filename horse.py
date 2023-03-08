@@ -17,6 +17,8 @@ class HORSE_SOLUTION:
         self.joints = self.linksAndjoints[1]
         self.totalLinks = self.linksAndjoints[2]
 
+        self.minZpos = self.info.minZpos
+
         self.numSensorNeurons = 0
         for i in range(self.totalLinks):
             if self.links[i].sensorYN == 1: ## link has a sensor

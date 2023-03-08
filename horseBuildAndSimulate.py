@@ -9,7 +9,6 @@ indexToShow = int(sys.argv[2])
 timestamp = sys.argv[3]
 seed = sys.argv[4]
 gen = sys.argv[5]
-print(gen)
 
 def Unpickle(timestamp, seed, generation):
     with open('Checkpoints/checkpoint_'+timestamp+'_seed'+seed+'_gen'+str(generation)+'.pickle', 'rb') as handle:
