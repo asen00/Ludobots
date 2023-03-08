@@ -2,10 +2,10 @@ import numpy as np
 import random as rd
 
 ## Number of iterations in simulation
-num = 1000
+num = 5000
 
 ## Number of hillclimbers
-populationSize = 1
+populationSize = 10
 
 ## Number of generations
 numberofGenerations = 1
