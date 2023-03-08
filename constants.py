@@ -2,13 +2,13 @@ import numpy as np
 import random as rd
 
 ## Number of iterations in simulation
-num = 5000
+num = 10000
 
 ## Number of hillclimbers
-populationSize = 5
+populationSize = 10
 
 ## Number of generations
-numberofGenerations = 1
+numberofGenerations = 500
 
 ## Number of neurons
 numSensorNeurons = 3

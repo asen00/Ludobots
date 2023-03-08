@@ -62,6 +62,7 @@ class HORSE_INFO:
         dirOpt = [-1,1]
 
         if self.numLinks > 1:
+            limbYN = np.random.randint(low=0, high=3, size=self.numLinks)
             mainBody = self.Construct_Main_Body(self.numLinks, self.mainFace, self.mainDir)
 
             self.links[0] = LINK(linkName = 0,
@@ -91,6 +92,7 @@ class HORSE_INFO:
                                                     jointPos = mainBody[2][linkIndex],
                                                     jointAxis = self.Get_Joint_Axis(mainBody[0], rd.randint(0, 1)))
         else:
+            limbYN = np.random.randint(low=1, high=3, size=self.numLinks)
             self.links[0] = LINK(linkName = 0,
                                 pos = self.origin, 
                                 size = np.random.uniform(low=0.75, high=0.75, size=3), 
@@ -98,7 +100,6 @@ class HORSE_INFO:
         
         faceOpt.remove(self.mainFace)
         self.totalLinkTally = self.numLinks
-        limbYN = np.random.randint(low=0, high=3, size=self.numLinks)
         for parent in range(self.numLinks):
             if limbYN[parent] == 1: ## limb grown from only one direction on random axis
                 numSubLimbs = rd.randint(1, 3)
