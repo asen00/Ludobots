@@ -3,12 +3,12 @@ import pybullet_data
 import pyrosim.pyrosim as pyrosim
 import random as rd
 
-from horseInfo import HORSE_INFO
+from horseInfo_copy import HORSE_INFO
 
 class HORSE:
     def __init__(self, origin):
-        #self.numLinks = 5
-        self.numLinks = rd.randint(1, 5)
+        self.numLinks = 3
+        #self.numLinks = rd.randint(1, 5)
         self.info = HORSE_INFO(self.numLinks, origin)
         self.linksAndjoints = self.info.Get_Joints_and_Links()
         self.links = self.linksAndjoints[0]
