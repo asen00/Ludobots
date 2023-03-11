@@ -39,7 +39,7 @@ class HORSE_PHC:
         self.Spawn()
         self.Mutate()
         self.Evaluate(self.children)
-        #self.Print()
+        self.Print()
         self.Select()
 
     def Spawn(self):
