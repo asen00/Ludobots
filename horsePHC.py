@@ -34,14 +34,6 @@ class HORSE_PHC:
             self.Evolve_For_One_Generation()
             self.Save_Fitness(currentGeneration)
             self.Checkpoint(currentGeneration, pergen)
-    
-    def Save_Fitness(self, generation):
-        self.fitnessAllGen[generation] = self.Return__Population_Fitness_for_Generation()
-    
-    def Checkpoint(self, generation, pergen):
-        if (generation == 0) or (generation % pergen == 0) or (generation == c.numberofGenerations-1):
-                self.checkpointParents[generation] = self.parents
-                self.Pickle_Checkpoints(generation)
 
     def Evolve_For_One_Generation(self):
         self.Spawn()
@@ -77,6 +69,14 @@ class HORSE_PHC:
             if self.parents[popMember].fitness < self.children[popMember].fitness:
                 self.parents[popMember] = self.children[popMember]
     
+    def Save_Fitness(self, generation):
+        self.fitnessAllGen[generation] = self.Return__Population_Fitness_for_Generation()
+    
+    def Checkpoint(self, generation, pergen):
+        if (generation == 0) or (generation % pergen == 0) or (generation == c.numberofGenerations-1):
+                self.checkpointParents[generation] = self.parents
+                self.Pickle_Checkpoints(generation)
+
     def Return__Population_Fitness_for_Generation(self):
         popFitnessForGen = np.zeros(c.populationSize)
         for popMember in range(c.populationSize):
