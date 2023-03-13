@@ -71,17 +71,16 @@ class HORSE_SOLUTION:
 
     def Mutate(self):
         randomChange = rd.randint(0, 2)
-        #randomChange = 3
-        if randomChange == 0:
+        if (randomChange == 0) and (len(self.remainingLinks[4:]) != 0):
             randomSublink = rd.choice(self.remainingLinks[4:])
             self.Change_Link_Size(randomSublink)
-        elif randomChange == 1:
-            randomSublink = rd.choice(self.remainingLinks)
+        elif (randomChange == 1) and (len(self.remainingLinks[3:]) != 0):
+            randomSublink = rd.choice(self.remainingLinks[3:])
             self.Change_Sensing(randomSublink)
         elif randomChange == 2:
             randomSublink = rd.choice(self.remainingLinks)
             self.Add_Sublink(randomSublink)
-        else:
+        elif (randomChange == 3) and (len(self.remainingLinks[3:]) != 0):
             randomSublink = rd.choice(self.remainingLinks[3:])
             self.Remove_Sublink(randomSublink)
         
@@ -136,10 +135,7 @@ class HORSE_SOLUTION:
                     self.sensors[i] -= 1
 
     def Remove_Sublink(self, link):
-        print('start', self.info[1])   
-        if self.info[0][link].pieceType == 'start':
-            pass
-        elif self.info[0][link].pieceType == 'end':
+        if self.info[0][link].pieceType == 'end':
             if self.info[0][link].sensorYN == 1:
                 self.info[3] -= 1
                 self.weights = np.delete(self.weights, obj=self.sensors[link], axis=0)
@@ -153,41 +149,14 @@ class HORSE_SOLUTION:
             self.remainingLinks.remove(link)
             self.remainingJoints.remove(link-1)
         else:
-            print('middle')
-            self.info[0][link] = self.info[0][link+1] # turn link 9 into link 10
-
-            if self.info[0][link+1].pieceType == 'end': # if 10 is the end piece
-                if self.info[0][link+1].sensorYN == 1: # if 10 has a sensor
-                    self.info[3] -= 1 # decrease numsensors by one
-                    self.weights = np.delete(self.weights, obj=self.sensors[link+1], axis=0) # delete the row for the sensor in link 10
-                    del self.sensors[link+1] # delete the sensor in link 10
-                    self.sensorCount -= 1 # decrease numsensors by one
-                self.info[2] -= 1 # decrease numtotallinks by one
-                self.info[4] -= 1 # decrease nummotors by one
-                del self.info[0][link+1] # delete link 10
-                del self.info[1][link] # delete joint 9, i.e., joint between links 9 and 10
-                self.weights = np.delete(self.weights, obj=link, axis=1) # delete the column for the motor in joint 9
-                self.remainingLinks.remove(link+1) # delete link 10
-                self.remainingJoints.remove(link) # delete joint 9, i.e., joint between links 9 and 10
-                # then you need to rename the joints after joint 9 to be indexed by one number smaller
-                for index in range(len(self.remainingJoints)):
-                    if self.remainingJoints[index] >= link+1:
-                        self.remainingJoints[index] -= 1
-                '''STUCK: Need to rename key in self.info[1] dict, such that all joints after the deleted one are indexed by a smaller index'''
-            else:
-                print('ERROR in Remove_Sublink() method from horse.py')
-        print('end', self.info[1])
+            pass
 
     def Add_Sublink(self, link):
         if link-4 in range(3):
-            print('pass')
             pass
         elif self.info[0][link].pieceType != 'end':
-            print('pass')
             pass
         else:
-            print('link after which new link is being created: ', link)
-            print('new link key: ', self.info[2])
             newlinksize = np.random.uniform(low=0.25, high=0.5, size=3)
             jointPos = np.zeros(3)
             jointPos[np.abs(self.info[0][link].sublimbFace)] = np.sign(self.info[0][link].sublimbFace) * self.info[0][link].size[np.abs(self.info[0][link].sublimbFace)]
@@ -247,7 +216,6 @@ class HORSE_SOLUTION:
             pyrosim.Send_Motor_Neuron(name = sensorCount+i , jointName = self.info[1][i].jointName)
             motorCount += 1
 
-        print(self.weights.shape)
         for i in list(self.sensors.keys()):
             currentRow = self.sensors[i]
             for j in self.remainingJoints:

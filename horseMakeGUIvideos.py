@@ -3,8 +3,8 @@ import numpy as np
 import time
 import constants as c
 
-timestamp = '03-11-23_16:21:18'
-run = 0
+timestamp = '03-12-23_21:44:19'
+run = 6
 IDsForGUIvideos = np.load('Outputs/IDforGUIvidoes_'+timestamp+'.npy')
 
 os.system("/Users/AntaraSen_1/opt/anaconda3/bin/python horseBuildAndSimulate.py " + " GUI " + str(IDsForGUIvideos[run]) + " " + timestamp + " " + str(run) + " FIRST" + " 2>&1 &")
