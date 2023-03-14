@@ -42,7 +42,7 @@ In order to better utilize computational resources, the evolutionary algorithm i
 Finally, the functionality of this algorithm needs to be tested. We do this by setting random seeds such that the evolutionary choices made at each iteration can be repeated if the process is initialized with the same seed. Seeds 0-9 were used to see whether this evolutionary algorithm was actually making robots fitter, or whether it was just happening by chance.
 
 ## Tracking Evolution
-Evolution is tracked using a fitness-vs.-generation graph. For each random seed 0-9, a line is drawn to show the fittest population member in each generation. 
+Evolution is tracked using a fitness-vs.-generation graph. For each random seed 0-9, a line is drawn to show the fittest population member in each generation. (Markers for the other population members was omitted because the plot became too noisy.)
 ![FinalEvolutionPlot](https://user-images.githubusercontent.com/114432525/225159746-c68eaf17-1e53-4dd3-a04a-5dac6ce5589a.png)
 
 To watch the evolution of a robot, one may use the file "horseMakeGUIvideos.py" to run GUI simulations of the first and last generations of the ending fittest member for any seed they specify. [Here is an example of such evolution for seed 6.](https://youtu.be/f34L5RC4C8k)
