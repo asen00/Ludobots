@@ -53,3 +53,6 @@ To watch the evolution of a robot, one may use the file "horseMakeGUIvideos.py" 
 
 ## How to Run the Code
 The evolutionary algorithm is run through horsePlotSearch.py and once finished, the robot for any specified run can be watched by pasting the starting timestamp (printed) into horseMakeGUIvideos.py and running this file.
+
+## Acknowledgements
+I would like to extend my thanks to our instructor, Sam Kriegman, and TA, Donna Hooshmand, for their guidance and help during this course. I must also thank my lab member, David Matthews, for sharing his knowledge and insight.
