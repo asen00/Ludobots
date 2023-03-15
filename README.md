@@ -47,9 +47,8 @@ Evolution is tracked using a fitness-vs.-generation graph. For each random seed 
 
 To watch the evolution of a robot, one may use the file "horseMakeGUIvideos.py" to run GUI simulations of the first and last generations of the ending fittest member for any seed they specify. [Here is an example of such evolution for seed 6.](https://youtu.be/f34L5RC4C8k)
 
-## Trends in Evolution
-
-### Insights about Simultaneous Evolution of Brains and Bodies
+## Insights about Simultaneous Evolution of Brains and Bodies
+In playing around with the Mutate function, I found that just evolving the brain of a robot leads to a much higher fitness than evolving the body and brain at the same time. I think this might be because when we fix morphology, the brain needs to optimize to it; allowing morphology to evolve means that the brain has to constantly play catch-up to be optimized for any given body. So perhaps the ideal algorithm is one which allows the fitness curve of simulatneous brain-body evolution to plateau, and then from there on only evolves the brain to maximize fitness.
 
 ## How to Run the Code
 The evolutionary algorithm is run through horsePlotSearch.py and once finished, the robot for any specified run can be watched by pasting the starting timestamp (printed) into horseMakeGUIvideos.py and running this file.
