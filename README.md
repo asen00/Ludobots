@@ -3,39 +3,64 @@
 ## Introduction
 Created using [Ludobots course](https://www.reddit.com/r/ludobots/wiki/installation/).
 
+<<<<<<< HEAD
 TEASER: https://youtu.be/f34L5RC4C8k
 VIDEO: https://youtu.be/-bC79AYuqt0
 
 ## About the Assignment
 This robot has been evolved in such a way that its morphology mutates alongside its neural network. This is achieved using the following logic.
 ![IMG_0377](https://user-images.githubusercontent.com/114432525/221763804-8e41a558-64a0-4e05-831e-9af12cc36684.jpg)
+=======
+## Simulating Evolution
+To understand my process, you may either read the text here (which includes all the detail about genotypes, phenotypes, the evolutionary algorithm, etc.) or watch this [quick video](https://youtu.be/-bC79AYuqt0) (which includes B-roll).
+>>>>>>> ae13dca955ad566653dffaf973989c7ea074d0f9
 
-For reference, links with sensors are colored green, those without are blue, and there is a blue world element present.
+### Generating a Random Parent and the Genotype-to-Phenotype Map
+The root robot is a chain of 3 sensors, all joined together along the x-axis using 'revolute' joints; these will be referred to as thoraxes. Then, each link in the main body is given a random choice to either sprout a limb along one face, two faces, or not sprout limbs at all. If a limb is to be grown, the number of sub-limbs, or "phalanges," is randomly chosen in the range 1-3. Each phalange may choose to propagate in either the y- or z-directions and can revolve along the x-, y- or z-axis. Shown below is what would happen if each thorax decided to grow all 6 allowed phalanges.
+![Add a heading](https://user-images.githubusercontent.com/114432525/225158691-816c48cc-aec3-40d2-94dd-b3f34bdab966.png)
 
-## How It Was Made
-The root robot is a chain of 5 sensors, all joined together along the x-axis using 'revolute' joints. Then, each link in the main body is given a random choice to either spawn a limb or not. If a limb is to be spawned, the number of sub-limbs, or "phalanges," is randomly chosen in the range 1-4. The limb may only propagate along the y- or z-axes, but can form in just one or both (positive and negative) directions along its chosen axis.
+However, since the robots are formed using direct encoding, there is no general formula for a genotype map, as there exists in recursive algorithms such as L-systems. Here, each thorax has options on the number of limbs to grow and each limb has a choice of number of phalanges. Thus, genotype maps become a case-by-case encoding of the robot’s body. Consider another example.
+![Add a heading-2](https://user-images.githubusercontent.com/114432525/225158741-a4c94f2d-f81d-4443-b12b-fbbbd7725e90.png)
 
-Also mutated during evolution are the sensing capabilities of each phalange, the axis of each revolving phalange joint, and the synaptic structure and weights of all the neurons.
+Finally, let’s consider the brains of these robots. How are they generated? First, each link (thorax and phalange) is assigned a bit that either turns on its touch sensing capability or lets the sensor remain dormant. Then, a simple network connects every sensor to every revolving motorized joint, each connection having some random synaptic weight.
+![Add a heading-3](https://user-images.githubusercontent.com/114432525/225158781-e0b9df7f-f25d-4215-ae37-f27a03aa36fb.png)
 
-The robot was trained to move in a straight line.
+### Spawning Children
+Spawning a child is just creating a copy of the parent’s genotype and then using it to build an identical robot.
 
-### New Skills Learned
-1) [Random seed](https://www.analyticsvidhya.com/blog/2021/12/what-does-numpy-random-seed-do/)
-In order to make the work reproducible, runs were indexed using random seeds 0-4. This means that if the code is rerun for a specific seed, it should produce the same solution since all random mutations will be re-picked in the same pseudorandom sequence.
+### Mutating Bodies, Brains, or Both?
+First, the robot’s body is mutated. This can be done in one of three ways:
+Changing the size of a phalange
+Changing the sensing capability of a phalange
+Adding a phalange to a limb with less than 3 phalanges (or to a thorax with no limbs).
+The choice of which phalange/limb to change, the change to be made, and the new value of the chosen parameter are all determined randomly. Note that either the second or third option also involve changing the neural network, i.e., adding/removing a sensor and/or a motor.
 
-2) [Checkpointing](https://legacy.docs.greatexpectations.io/en/stable/guides/how_to_guides/validation/how_to_run_a_checkpoint_in_python.html)
-Since this program now needs to run for much longer timescales, checkpointing helped me store my place in the algorithm so that if the code crashed or needed to be stopped, the program could resume where it left off.
+After the body has been changed, the synaptic weight of a random sensor-motor connection is assigned a new random value. This changes the performance of the neural network.
 
-3) [Pickling](https://www.geeksforgeeks.org/understanding-python-pickling-example/)
-I checkpointed using [Python's pickle module](https://docs.python.org/3/library/pickle.html).
+### Defining and Evaluating Fitness
+The fitness of each robot is calculated and stored. These robots were trained to move using a fitness function that maximizes x-distance of the root link from the origin.
 
-## Seeing Evolution
-Evolution is tracked using a fitness-vs.-generation graph. For each random seed in the range 1-5, a line is drawn to show the fittest population member in each generation. Below are some examples of plots produced.
-<img width="998" alt="Screen Shot 2023-02-27 at 11 49 32 PM" src="https://user-images.githubusercontent.com/114432525/221765833-f5283964-51cf-4801-8094-d6b6b299ee2d.png">
-<img width="996" alt="Screen Shot 2023-02-27 at 11 49 42 PM" src="https://user-images.githubusercontent.com/114432525/221765861-5a20bd4e-69b2-4f66-ae3f-671566e696e0.png">
-<img width="996" alt="Screen Shot 2023-02-27 at 11 49 53 PM" src="https://user-images.githubusercontent.com/114432525/221765882-a756074e-0891-4f08-ab30-461ba22c660e.png">
+### Creating Selection Pressure
+At each generation, the best robot is selected for using the following algorithm. If the parent is fitter than the child, the child is deleted and the parent undergoes random mutation again. If the child is fitter than the parent, it becomes a parent and spawns a child of its own which then undergoes mutation.
 
-However, to actually watch the evolution of a robot, one may use the file "horseMakeGUIvideos.py" to run GUI simulations of the first and last generations of the ending fittest member for any seed they specify. Below is an example of such evolution. This corresponds to the [last graph shown above](https://youtu.be/godZyfXm44s).
+The repetition of this over several generations forces only those which locomote to survive and phylogenetically propagate.
 
-## Bugs
-There is still one bugs remaining. The Construct_Limb() method in the HORSE_INFO class is still making my limbs grow into each other, and sometimes disjointed. This is affecting the way that the fitness is being written, and thus the robots are sometimes great at forward locomotion, and other times just move in circles.
+## Parallelization and Seeding
+In order to better utilize computational resources, the evolutionary algorithm is parallelized, i.e., a population of 10 random parents are allowed to evolve simultaneously. At the end of 500 generations, the fittest population member is selected. This decreases the time to evaluate 5000 simulations since we are no longer just searching the space sequentially.
+
+Finally, the functionality of this algorithm needs to be tested. We do this by setting random seeds such that the evolutionary choices made at each iteration can be repeated if the process is initialized with the same seed. Seeds 0-9 were used to see whether this evolutionary algorithm was actually making robots fitter, or whether it was just happening by chance.
+
+## Tracking Evolution
+Evolution is tracked using a fitness-vs.-generation graph. For each random seed 0-9, a line is drawn to show the fittest population member in each generation. (Markers for the other population members was omitted because the plot became too noisy.)
+![FinalEvolutionPlot](https://user-images.githubusercontent.com/114432525/225159746-c68eaf17-1e53-4dd3-a04a-5dac6ce5589a.png)
+
+To watch the evolution of a robot, one may use the file "horseMakeGUIvideos.py" to run GUI simulations of the first and last generations of the ending fittest member for any seed they specify. [Here is an example of such evolution for seed 6.](https://youtu.be/f34L5RC4C8k)
+
+## Insights about Simultaneous Evolution of Brains and Bodies
+In playing around with the Mutate function, I found that just evolving the brain of a robot leads to a much higher fitness than evolving the body and brain at the same time. I think this might be because when we fix morphology, the brain needs to optimize to it; allowing morphology to evolve means that the brain has to constantly play catch-up to be optimized for any given body. So perhaps the ideal algorithm is one which allows the fitness curve of simulatneous brain-body evolution to plateau, and then from there on only evolves the brain to maximize fitness.
+
+## How to Run the Code
+The evolutionary algorithm is run through horsePlotSearch.py and once finished, the robot for any specified run can be watched by pasting the starting timestamp (printed) into horseMakeGUIvideos.py and running this file.
+
+## Acknowledgements
+I would like to extend my thanks to our instructor, Sam Kriegman, and TA, Donna Hooshmand, for their guidance and help during this course. I must also thank my lab member, David Matthews, for sharing his knowledge and insight.
