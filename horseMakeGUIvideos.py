@@ -1,7 +1,5 @@
 import os
 import numpy as np
-import time
-import constants as c
 
 timestamp = '03-12-23_21:44:19'
 run = 6

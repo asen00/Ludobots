@@ -31,7 +31,7 @@ class EVOLUTION_TRACKER:
         color_dict = {0:'#EB4034', 1:'#EB9B34', 2:'#EBE01E', 3:'#7FD141', 4:'#2AD1D4', 5:'#1109ED', 6:'#9693F5', 7:'#C479F2', 8:'#D42AC0', 9:'#F2798F'}
 
         for seed in range(self.numRuns):
-            plt.plot(x, self.fullfitnessArray[seed], linestyle='', marker="o", color=color_dict[seed], markersize=1)
+            #plt.plot(x, self.fullfitnessArray[seed], linestyle='', marker="o", color=color_dict[seed], markersize=1)
             for gen in range(c.numberofGenerations):
                 self.fittestMember[seed][gen] = self.fullfitnessArray[seed][gen][np.argmax(self.fullfitnessArray[seed][gen])]
             plt.plot(x, self.fittestMember[seed], linestyle='-', label='Run:'+str(seed), color=color_dict[seed])

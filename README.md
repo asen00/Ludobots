@@ -3,6 +3,9 @@
 ## Introduction
 Created using [Ludobots course](https://www.reddit.com/r/ludobots/wiki/installation/).
 
+TEASER: https://youtu.be/f34L5RC4C8k
+VIDEO: https://youtu.be/-bC79AYuqt0
+
 ## About the Assignment
 This robot has been evolved in such a way that its morphology mutates alongside its neural network. This is achieved using the following logic.
 ![IMG_0377](https://user-images.githubusercontent.com/114432525/221763804-8e41a558-64a0-4e05-831e-9af12cc36684.jpg)
