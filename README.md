@@ -19,6 +19,6 @@ The first half of the assignments were from the [Ludobots course](https://www.re
 - parallelhc
 - quadruped
 
-You can find the end product in the branch called "final."
+You can find the end product in the [final](https://github.com/asen00/ludobots_sen/tree/final) branch.
 
 What I learned: object-oriented programming in Python, parallelization, seeding, pickling
