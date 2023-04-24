@@ -2,7 +2,7 @@
 
 Course taught by Sam Kriegman at Northwestern University during the Winter 2023 quarter
 
-The following branches are responses to assignments B-N of the [Ludobots course]() by Josh Bongard at the University of Vermont:
+The following branches are responses to assignments B-N of the [Ludobots course](https://www.reddit.com/r/ludobots/wiki/installation/) by Josh Bongard at the University of Vermont:
 - simulation
 - onelink
 - manylinks
@@ -17,6 +17,6 @@ The following branches are responses to assignments B-N of the [Ludobots course]
 - parallelhc
 - quadruped
 
-The remaining branches are responses to class assignments and build up to the "final" branch. This demonstrates a parallel hillclimber which is optimized for locomotion.
+The remaining branches are responses to class assignments and build up to the "final" branch. This demonstrates a parallel hillclimber which is optimized for locomotion. You can watch the final product [here](https://youtu.be/-bC79AYuqt0).
 
 What I learned: object-oriented programming in Python, parallelization, evolutionary algorithms, seeding, pickling
