@@ -17,6 +17,6 @@ The following branches are responses to assignments B-N of the [Ludobots course]
 - parallelhc
 - quadruped
 
-The remaining branches are responses to class assignments and end in a parallel hillclimber which is optimized for locomotion.
+The remaining branches are responses to class assignments and build up to the "final" branch. This demonstrates a parallel hillclimber which is optimized for locomotion.
 
 What I learned: object-oriented programming in Python, parallelization, evolutionary algorithms, seeding, pickling
